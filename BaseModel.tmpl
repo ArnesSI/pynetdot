@@ -1,0 +1,26 @@
+{% for model_item in models|dictsort %}
+{% set model_name = model_item[0] %}
+{% set model = model_item[1] %}
+class Base{{ model.class_name }}(n.Netdot):
+    resource = '{{ model.resource }}/'
+    id_field = '{{ model.id_field }}'
+    _fields = [
+{% for f in model.fields %}
+        f.{{ f.class }}('{{ f.name }}'{{ f.args }}),
+{% endfor %}
+    ]
+    _views = {{ model.views }}
+
+    @property
+    def label(self):
+        l = ' '.join([unicode(getattr(self, l)) for l in {{ model.label }}])
+        return l.strip()
+
+{% for link in reverse_links.get(model_name, []) %}
+    def {{ link.method }}(self):
+        cls = getattr(pynetdot.models, '{{ link.target }}')
+        return cls.search({{ link.field }}=self.id)
+
+{% endfor %}
+
+{% endfor %}

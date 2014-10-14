@@ -169,6 +169,9 @@ class Netdot(object):
             raise Exception('%s with id %d does not existin netdot' % (self.resource, self.id))
         if response.status_code != requests.codes.ok:
             response.raise_for_status()
+        self._from_response(response)
+
+    def _from_response(self, response):
         xml = parse_xml(response.text)
         # returns a single tag: <opt id="...
         attrs = xml.attrib
@@ -184,6 +187,7 @@ class Netdot(object):
         obj._attrs = attrs
         for field in cls._fields:
             field.parse(obj)
+        obj.id = attrs['id']
         obj._resolved = True
         obj._original_state = obj._as_dict()
 
@@ -240,12 +244,14 @@ class Netdot(object):
         values = self._as_dict()
         params = {}
         for f in fields:
-            params[f] = values.get(f)
+            params[f.name] = values.get(f.name)
         response = _rest_post(resource, params)
         if response.status_code == 404:
             return False
         if response.status_code != requests.codes.ok:
             response.raise_for_status()
+        # Reset all values from server response
+        self._from_response(response)
         # Reset initial field values
         self._original_state = self._as_dict()
         return True
@@ -263,6 +269,8 @@ class Netdot(object):
             return False
         if response.status_code != requests.codes.ok:
             response.raise_for_status()
+        # Unset id so saving this instance again will create a new object in netdot DB
+        self.id = None
         return True
 
     def __getattr__(self, attr, default=None):

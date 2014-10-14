@@ -12,7 +12,12 @@ HEADERS = {
 }
 COOKIES_CACHE_KEY = 'netdot_cookie'
 
-
+def setup(url='http://localhost/netdot/', username='admin', password='password'):
+    if not url.endswith('/'):
+        url = url + '/'
+    Netdot.NETDOT_URL = url
+    Netdot.NETDOT_USERNAME = username
+    Netdot.NETDOT_PASSWORD = password
 
 
     

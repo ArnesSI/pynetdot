@@ -1,6 +1,6 @@
 import pynetdot.models
 from dateutil import parser as datetime_parser
-from datetime import datetime
+from datetime import datetime, date
 
 class BaseField(object):
     def __init__(self, name, **kwargs):

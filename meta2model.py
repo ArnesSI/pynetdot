@@ -199,7 +199,7 @@ import pynetdot.models
 
 from jinja2 import Environment, FileSystemLoader
 env = Environment(
-    loader=FileSystemLoader('/home/nms/tmp/matej/pynetdot/'),
+    loader=FileSystemLoader('./'),
     trim_blocks=True,
     lstrip_blocks=True
 )

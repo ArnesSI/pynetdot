@@ -1,5 +1,6 @@
 import pynetdot.models
 from dateutil import parser as datetime_parser
+from datetime import datetime
 
 class BaseField(object):
     def __init__(self, name, **kwargs):
@@ -13,6 +14,9 @@ class BaseField(object):
         value = obj._attrs.get(self.name, self.default)
         value = self._clean(value)
         setattr(obj, self.name, value)
+
+    def raw(self, v):
+        return v
 
     def _clean(self, v):
         return v
@@ -34,6 +38,12 @@ class BoolField(BaseField):
             return False
         return bool(v)
 
+    def raw(self, v):
+        if v == True:
+            return '1'
+        elif v == False:
+            return '0'
+        return v
 
 class DateField(BaseField):
     def _clean(self, v):
@@ -42,12 +52,21 @@ class DateField(BaseField):
         date = datetime_parser.parse(v)
         return date.date()
 
+    def raw(self, v):
+        if (isinstance(v, date)):
+            return v.strftime('%Y-%m-%d')
+        elif not v:
+            return ''
+        return v
 
 class DateTimeField(BaseField):
     def _clean(self, v):
         if not v or v == '':
             return None
-        date = datetime_parser.parse(v, dayfirst=True)
+        try:
+            date = datetime_parser.parse(v, dayfirst=True)
+        except:
+            return None
         if date.year == 1970:
             # if there is no timestamp the field will contain:
             # '1970-01-02 00:00:01'
@@ -55,6 +74,12 @@ class DateTimeField(BaseField):
             return None
         return date
 
+    def raw(self, v):
+        if (isinstance(v, datetime)):
+            return v.strftime('%Y-%m-%d %H:%M:%S')
+        elif not v:
+            return ''
+        return v
 
 class StringField(BaseField):
     def __init__(self, name, **kwargs):
@@ -65,6 +90,10 @@ class StringField(BaseField):
         kwargs['default'] = default
         super(StringField, self).__init__(name, **kwargs)
 
+    def raw(self, v):
+        if not v:
+            return ''
+        return v
 
 class LinkField(BaseField):
     def __init__(self, name, **kwargs):
@@ -81,3 +110,10 @@ class LinkField(BaseField):
         class_ = getattr(pynetdot.models, self.link_to)
         linked_obj = class_(id=link_id)
         setattr(obj, self.name, linked_obj)
+
+    def raw(self, v):
+        if hasattr(v, 'id'):
+            return v.id
+        elif not v:
+            return ''
+        return v

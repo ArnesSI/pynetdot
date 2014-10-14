@@ -40,11 +40,11 @@ def _rest_get(resource, **kwargs):
         response = requests.get(url, cookies=_get_cookies(clear_cache=True), headers=HEADERS, **kwargs)
     return response
 
-def _rest_post(resource, **kwargs):
+def _rest_post(resource, params, **kwargs):
     url = Netdot.NETDOT_URL + 'rest/' + resource
-    response = requests.post(url, cookies=_get_cookies(), headers=HEADERS, **kwargs)
+    response = requests.post(url, cookies=_get_cookies(), headers=HEADERS, params=params, **kwargs)
     if response.status_code == 403:
-        response = requests.post(url, cookies=_get_cookies(clear_cache=True), headers=HEADERS, **kwargs)
+        response = requests.post(url, cookies=_get_cookies(clear_cache=True), headers=HEADERS, params=params, **kwargs)
     return response
 
 def _rest_delete(resource, **kwargs):
@@ -183,10 +183,9 @@ class Netdot(object):
         obj._original_state = obj._as_dict()
 
     def _as_dict(self):
-        values = dict([
-            (f.name, getattr(self, f.name))
-            for f in self._fields
-        ])
+        values = dict()
+        for f in self._fields:
+            values[f.name] = f.raw(getattr(self, f.name))
         return values
 
     def get_dirty_fields(self):
@@ -229,18 +228,22 @@ class Netdot(object):
             return True
         if self.id:
             fields = self.get_dirty_fields()
+            resource = '%s%s' % (self.resource, self.id)
         else:
-            fields = [f.name for f in self._fields]
+            fields = self._fields
+            resource = self.resource
+        values = self._as_dict()
+        params = {}
+        for f in fields:
+            params[f] = values.get(f)
+        response = _rest_post(resource, params)
+        if response.status_code == 404:
+            return False
+        if response.status_code != requests.codes.ok:
+            response.raise_for_status()
         # Reset initial field values
         self._original_state = self._as_dict()
-
-
-
-
-
-
-
-
+        return True
 
     def __getattr__(self, attr, default=None):
         """

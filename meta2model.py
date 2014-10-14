@@ -7,6 +7,8 @@ from xml.etree import ElementTree as ET
 import pynetdot
 from pynetdot.fields import *
 
+pynetdot.setup(url=sys.argv[1], username=sys.argv[2], password=sys.argv[3])
+
 resources = [
     #'accessright',
     'arpcache',

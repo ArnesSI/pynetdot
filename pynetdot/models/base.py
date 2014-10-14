@@ -16,6 +16,7 @@ class BaseArpCache(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['tstamp', 'device']])
         return l.strip()
 
+    @property
     def entries(self):
         cls = getattr(pynetdot.models, 'ArpCacheEntry')
         return cls.search(arpcache=self.id)
@@ -63,10 +64,12 @@ class BaseAsset(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['product_id', 'serial_number', 'physaddr']])
         return l.strip()
 
+    @property
     def devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(asset_id=self.id)
 
+    @property
     def device_modules(self):
         cls = getattr(pynetdot.models, 'DeviceModule')
         return cls.search(asset_id=self.id)
@@ -86,22 +89,27 @@ class BaseAvailability(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def page_notifications(self):
         cls = getattr(pynetdot.models, 'Contact')
         return cls.search(notify_email=self.id)
 
+    @property
     def page_notifications(self):
         cls = getattr(pynetdot.models, 'Contact')
         return cls.search(notify_pager=self.id)
 
+    @property
     def page_notifications(self):
         cls = getattr(pynetdot.models, 'Contact')
         return cls.search(notify_voice=self.id)
 
+    @property
     def entities(self):
         cls = getattr(pynetdot.models, 'Entity')
         return cls.search(availability=self.id)
 
+    @property
     def sites(self):
         cls = getattr(pynetdot.models, 'Site')
         return cls.search(availability=self.id)
@@ -127,6 +135,7 @@ class BaseBackboneCable(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def strands(self):
         cls = getattr(pynetdot.models, 'CableStrand')
         return cls.search(cable=self.id)
@@ -175,10 +184,12 @@ class BaseCableStrand(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def splices(self):
         cls = getattr(pynetdot.models, 'Splice')
         return cls.search(strand1=self.id)
 
+    @property
     def splices2(self):
         cls = getattr(pynetdot.models, 'Splice')
         return cls.search(strand2=self.id)
@@ -198,10 +209,12 @@ class BaseCableType(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def backbonecables(self):
         cls = getattr(pynetdot.models, 'BackboneCable')
         return cls.search(type=self.id)
 
+    @property
     def horizontalcables(self):
         cls = getattr(pynetdot.models, 'HorizontalCable')
         return cls.search(type=self.id)
@@ -229,10 +242,12 @@ class BaseCircuit(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['cid']])
         return l.strip()
 
+    @property
     def strands(self):
         cls = getattr(pynetdot.models, 'CableStrand')
         return cls.search(circuit_id=self.id)
 
+    @property
     def interfaces(self):
         cls = getattr(pynetdot.models, 'Interface')
         return cls.search(circuit=self.id)
@@ -252,6 +267,7 @@ class BaseCircuitStatus(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def circuits(self):
         cls = getattr(pynetdot.models, 'Circuit')
         return cls.search(status=self.id)
@@ -271,6 +287,7 @@ class BaseCircuitType(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def circuits(self):
         cls = getattr(pynetdot.models, 'Circuit')
         return cls.search(type=self.id)
@@ -308,14 +325,17 @@ class BaseCloset(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'room']])
         return l.strip()
 
+    @property
     def backbones_end(self):
         cls = getattr(pynetdot.models, 'BackboneCable')
         return cls.search(end_closet=self.id)
 
+    @property
     def backbones_start(self):
         cls = getattr(pynetdot.models, 'BackboneCable')
         return cls.search(start_closet=self.id)
 
+    @property
     def horizontalcables(self):
         cls = getattr(pynetdot.models, 'HorizontalCable')
         return cls.search(closet=self.id)
@@ -356,38 +376,47 @@ class BaseContactList(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def contacts(self):
         cls = getattr(pynetdot.models, 'Contact')
         return cls.search(contactlist=self.id)
 
+    @property
     def devices(self):
         cls = getattr(pynetdot.models, 'DeviceContacts')
         return cls.search(contactlist=self.id)
 
+    @property
     def entities(self):
         cls = getattr(pynetdot.models, 'Entity')
         return cls.search(contactlist=self.id)
 
+    @property
     def access_rights(self):
         cls = getattr(pynetdot.models, 'GroupRight')
         return cls.search(contactlist=self.id)
 
+    @property
     def outlets(self):
         cls = getattr(pynetdot.models, 'HorizontalCable')
         return cls.search(contactlist=self.id)
 
+    @property
     def interfaces(self):
         cls = getattr(pynetdot.models, 'Interface')
         return cls.search(contactlist=self.id)
 
+    @property
     def services(self):
         cls = getattr(pynetdot.models, 'IpService')
         return cls.search(contactlist=self.id)
 
+    @property
     def sites(self):
         cls = getattr(pynetdot.models, 'Site')
         return cls.search(contactlist=self.id)
 
+    @property
     def zones(self):
         cls = getattr(pynetdot.models, 'Zone')
         return cls.search(contactlist=self.id)
@@ -407,6 +436,7 @@ class BaseContactType(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def contacts(self):
         cls = getattr(pynetdot.models, 'Contact')
         return cls.search(contacttype=self.id)
@@ -480,34 +510,42 @@ class BaseDevice(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def arp_caches(self):
         cls = getattr(pynetdot.models, 'ArpCache')
         return cls.search(device=self.id)
 
+    @property
     def bgppeers(self):
         cls = getattr(pynetdot.models, 'BGPPeering')
         return cls.search(device=self.id)
 
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'DeviceAttr')
         return cls.search(device=self.id)
 
+    @property
     def contacts(self):
         cls = getattr(pynetdot.models, 'DeviceContacts')
         return cls.search(device=self.id)
 
+    @property
     def modules(self):
         cls = getattr(pynetdot.models, 'DeviceModule')
         return cls.search(device=self.id)
 
+    @property
     def forwarding_tables(self):
         cls = getattr(pynetdot.models, 'FWTable')
         return cls.search(device=self.id)
 
+    @property
     def interfaces(self):
         cls = getattr(pynetdot.models, 'Interface')
         return cls.search(device=self.id)
 
+    @property
     def stp_instances(self):
         cls = getattr(pynetdot.models, 'STPInstance')
         return cls.search(device=self.id)
@@ -543,6 +581,7 @@ class BaseDeviceAttrName(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'DeviceAttr')
         return cls.search(name=self.id)
@@ -624,6 +663,7 @@ class BaseDhcpAttrName(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'DhcpAttr')
         return cls.search(name=self.id)
@@ -653,18 +693,22 @@ class BaseDhcpScope(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['type', 'name']])
         return l.strip()
 
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'DhcpAttr')
         return cls.search(scope=self.id)
 
+    @property
     def contained_scopes(self):
         cls = getattr(pynetdot.models, 'DhcpScope')
         return cls.search(container=self.id)
 
+    @property
     def templates(self):
         cls = getattr(pynetdot.models, 'DhcpScopeUse')
         return cls.search(scope=self.id)
 
+    @property
     def derived_scopes(self):
         cls = getattr(pynetdot.models, 'DhcpScopeUse')
         return cls.search(template=self.id)
@@ -684,6 +728,7 @@ class BaseDhcpScopeType(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def scopes(self):
         cls = getattr(pynetdot.models, 'DhcpScope')
         return cls.search(type=self.id)
@@ -728,54 +773,67 @@ class BaseEntity(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def bgppeers(self):
         cls = getattr(pynetdot.models, 'BGPPeering')
         return cls.search(entity=self.id)
 
+    @property
     def cables(self):
         cls = getattr(pynetdot.models, 'BackboneCable')
         return cls.search(owner=self.id)
 
+    @property
     def circuits(self):
         cls = getattr(pynetdot.models, 'Circuit')
         return cls.search(vendor=self.id)
 
+    @property
     def owned_devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(owner=self.id)
 
+    @property
     def used_devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(used_by=self.id)
 
+    @property
     def roles(self):
         cls = getattr(pynetdot.models, 'EntityRole')
         return cls.search(entity=self.id)
 
+    @property
     def sites(self):
         cls = getattr(pynetdot.models, 'EntitySite')
         return cls.search(entity=self.id)
 
+    @property
     def owned_blocks(self):
         cls = getattr(pynetdot.models, 'Ipblock')
         return cls.search(owner=self.id)
 
+    @property
     def used_blocks(self):
         cls = getattr(pynetdot.models, 'Ipblock')
         return cls.search(used_by=self.id)
 
+    @property
     def maintenance_contracts(self):
         cls = getattr(pynetdot.models, 'MaintContract')
         return cls.search(provider=self.id)
 
+    @property
     def employees(self):
         cls = getattr(pynetdot.models, 'Person')
         return cls.search(entity=self.id)
 
+    @property
     def products(self):
         cls = getattr(pynetdot.models, 'Product')
         return cls.search(manufacturer=self.id)
 
+    @property
     def links(self):
         cls = getattr(pynetdot.models, 'SiteLink')
         return cls.search(entity=self.id)
@@ -825,6 +883,7 @@ class BaseEntityType(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def roles(self):
         cls = getattr(pynetdot.models, 'EntityRole')
         return cls.search(type=self.id)
@@ -844,6 +903,7 @@ class BaseFiberType(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def strands(self):
         cls = getattr(pynetdot.models, 'CableStrand')
         return cls.search(fiber_type=self.id)
@@ -864,6 +924,7 @@ class BaseFloor(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['level', 'site']])
         return l.strip()
 
+    @property
     def rooms(self):
         cls = getattr(pynetdot.models, 'Room')
         return cls.search(floor=self.id)
@@ -883,6 +944,7 @@ class BaseFWTable(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['tstamp', 'device']])
         return l.strip()
 
+    @property
     def entries(self):
         cls = getattr(pynetdot.models, 'FWTableEntry')
         return cls.search(fwtable=self.id)
@@ -943,6 +1005,7 @@ class BaseHorizontalCable(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['jackid']])
         return l.strip()
 
+    @property
     def interfaces(self):
         cls = getattr(pynetdot.models, 'Interface')
         return cls.search(jack=self.id)
@@ -1016,22 +1079,27 @@ class BaseInterface(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'device']])
         return l.strip()
 
+    @property
     def arp_entries(self):
         cls = getattr(pynetdot.models, 'ArpCacheEntry')
         return cls.search(interface=self.id)
 
+    @property
     def fwt_entries(self):
         cls = getattr(pynetdot.models, 'FWTableEntry')
         return cls.search(interface=self.id)
 
+    @property
     def neighbors(self):
         cls = getattr(pynetdot.models, 'Interface')
         return cls.search(neighbor=self.id)
 
+    @property
     def vlans(self):
         cls = getattr(pynetdot.models, 'InterfaceVlan')
         return cls.search(interface=self.id)
 
+    @property
     def ips(self):
         cls = getattr(pynetdot.models, 'Ipblock')
         return cls.search(interface=self.id)
@@ -1082,42 +1150,52 @@ class BaseIpblock(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['address', 'prefix']])
         return l.strip()
 
+    @property
     def arp_entries(self):
         cls = getattr(pynetdot.models, 'ArpCacheEntry')
         return cls.search(ipaddr=self.id)
 
+    @property
     def snmp_devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(snmp_target=self.id)
 
+    @property
     def dhcp_scopes(self):
         cls = getattr(pynetdot.models, 'DhcpScope')
         return cls.search(ipblock=self.id)
 
+    @property
     def services(self):
         cls = getattr(pynetdot.models, 'IpService')
         return cls.search(ip=self.id)
 
+    @property
     def children(self):
         cls = getattr(pynetdot.models, 'Ipblock')
         return cls.search(parent=self.id)
 
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'IpblockAttr')
         return cls.search(ipblock=self.id)
 
+    @property
     def a_records(self):
         cls = getattr(pynetdot.models, 'RRADDR')
         return cls.search(ipblock=self.id)
 
+    @property
     def ptr_records(self):
         cls = getattr(pynetdot.models, 'RRPTR')
         return cls.search(ipblock=self.id)
 
+    @property
     def sites(self):
         cls = getattr(pynetdot.models, 'SiteSubnet')
         return cls.search(subnet=self.id)
 
+    @property
     def zones(self):
         cls = getattr(pynetdot.models, 'SubnetZone')
         return cls.search(subnet=self.id)
@@ -1153,6 +1231,7 @@ class BaseIpblockAttrName(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'IpblockAttr')
         return cls.search(name=self.id)
@@ -1171,6 +1250,7 @@ class BaseIpblockStatus(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def ipblocks(self):
         cls = getattr(pynetdot.models, 'Ipblock')
         return cls.search(status=self.id)
@@ -1209,6 +1289,7 @@ class BaseMaintContract(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['provider', 'number']])
         return l.strip()
 
+    @property
     def assets(self):
         cls = getattr(pynetdot.models, 'Asset')
         return cls.search(maint_contract=self.id)
@@ -1228,18 +1309,22 @@ class BaseMonitorStatus(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def bgppeers(self):
         cls = getattr(pynetdot.models, 'BGPPeering')
         return cls.search(monitorstatus=self.id)
 
+    @property
     def devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(monitorstatus=self.id)
 
+    @property
     def interfaces(self):
         cls = getattr(pynetdot.models, 'Interface')
         return cls.search(monitorstatus=self.id)
 
+    @property
     def ipservices(self):
         cls = getattr(pynetdot.models, 'IpService')
         return cls.search(monitorstatus=self.id)
@@ -1291,6 +1376,7 @@ class BasePerson(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['lastname', 'firstname']])
         return l.strip()
 
+    @property
     def roles(self):
         cls = getattr(pynetdot.models, 'Contact')
         return cls.search(person=self.id)
@@ -1312,26 +1398,32 @@ class BasePhysAddr(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['address']])
         return l.strip()
 
+    @property
     def arp_entries(self):
         cls = getattr(pynetdot.models, 'ArpCacheEntry')
         return cls.search(physaddr=self.id)
 
+    @property
     def assets(self):
         cls = getattr(pynetdot.models, 'Asset')
         return cls.search(physaddr=self.id)
 
+    @property
     def dhcp_hosts(self):
         cls = getattr(pynetdot.models, 'DhcpScope')
         return cls.search(physaddr=self.id)
 
+    @property
     def fwt_entries(self):
         cls = getattr(pynetdot.models, 'FWTableEntry')
         return cls.search(physaddr=self.id)
 
+    @property
     def interfaces(self):
         cls = getattr(pynetdot.models, 'Interface')
         return cls.search(physaddr=self.id)
 
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'PhysAddrAttr')
         return cls.search(physaddr=self.id)
@@ -1367,6 +1459,7 @@ class BasePhysAddrAttrName(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'PhysAddrAttr')
         return cls.search(name=self.id)
@@ -1393,6 +1486,7 @@ class BaseProduct(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['manufacturer', 'name']])
         return l.strip()
 
+    @property
     def assets(self):
         cls = getattr(pynetdot.models, 'Asset')
         return cls.search(product_id=self.id)
@@ -1412,6 +1506,7 @@ class BaseProductType(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def products(self):
         cls = getattr(pynetdot.models, 'Product')
         return cls.search(type=self.id)
@@ -1431,18 +1526,22 @@ class BaseRoom(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['floor', 'name']])
         return l.strip()
 
+    @property
     def closets(self):
         cls = getattr(pynetdot.models, 'Closet')
         return cls.search(room=self.id)
 
+    @property
     def devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(room=self.id)
 
+    @property
     def jacks(self):
         cls = getattr(pynetdot.models, 'HorizontalCable')
         return cls.search(room=self.id)
 
+    @property
     def people(self):
         cls = getattr(pynetdot.models, 'Person')
         return cls.search(room=self.id)
@@ -1468,50 +1567,62 @@ class BaseRR(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'zone']])
         return l.strip()
 
+    @property
     def devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(name=self.id)
 
+    @property
     def a_records(self):
         cls = getattr(pynetdot.models, 'RRADDR')
         return cls.search(rr=self.id)
 
+    @property
     def cnames(self):
         cls = getattr(pynetdot.models, 'RRCNAME')
         return cls.search(rr=self.id)
 
+    @property
     def ds_records(self):
         cls = getattr(pynetdot.models, 'RRDS')
         return cls.search(rr=self.id)
 
+    @property
     def hinfo_records(self):
         cls = getattr(pynetdot.models, 'RRHINFO')
         return cls.search(rr=self.id)
 
+    @property
     def loc_records(self):
         cls = getattr(pynetdot.models, 'RRLOC')
         return cls.search(rr=self.id)
 
+    @property
     def mx_records(self):
         cls = getattr(pynetdot.models, 'RRMX')
         return cls.search(rr=self.id)
 
+    @property
     def naptr_records(self):
         cls = getattr(pynetdot.models, 'RRNAPTR')
         return cls.search(rr=self.id)
 
+    @property
     def ns_records(self):
         cls = getattr(pynetdot.models, 'RRNS')
         return cls.search(rr=self.id)
 
+    @property
     def ptr_records(self):
         cls = getattr(pynetdot.models, 'RRPTR')
         return cls.search(rr=self.id)
 
+    @property
     def srv_records(self):
         cls = getattr(pynetdot.models, 'RRSRV')
         return cls.search(rr=self.id)
 
+    @property
     def txt_records(self):
         cls = getattr(pynetdot.models, 'RRTXT')
         return cls.search(rr=self.id)
@@ -1726,6 +1837,7 @@ class BaseService(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def Ips(self):
         cls = getattr(pynetdot.models, 'IpService')
         return cls.search(service=self.id)
@@ -1757,30 +1869,37 @@ class BaseSite(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'aliases']])
         return l.strip()
 
+    @property
     def devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(site=self.id)
 
+    @property
     def entities(self):
         cls = getattr(pynetdot.models, 'EntitySite')
         return cls.search(site=self.id)
 
+    @property
     def floors(self):
         cls = getattr(pynetdot.models, 'Floor')
         return cls.search(site=self.id)
 
+    @property
     def people(self):
         cls = getattr(pynetdot.models, 'Person')
         return cls.search(location=self.id)
 
+    @property
     def farlinks(self):
         cls = getattr(pynetdot.models, 'SiteLink')
         return cls.search(farend=self.id)
 
+    @property
     def nearlinks(self):
         cls = getattr(pynetdot.models, 'SiteLink')
         return cls.search(nearend=self.id)
 
+    @property
     def subnets(self):
         cls = getattr(pynetdot.models, 'SiteSubnet')
         return cls.search(site=self.id)
@@ -1803,6 +1922,7 @@ class BaseSiteLink(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def circuits(self):
         cls = getattr(pynetdot.models, 'Circuit')
         return cls.search(linkid=self.id)
@@ -1856,6 +1976,7 @@ class BaseSTPInstance(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['number', 'device']])
         return l.strip()
 
+    @property
     def stp_ports(self):
         cls = getattr(pynetdot.models, 'InterfaceVlan')
         return cls.search(stp_instance=self.id)
@@ -1875,6 +1996,7 @@ class BaseStrandStatus(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def strands(self):
         cls = getattr(pynetdot.models, 'CableStrand')
         return cls.search(status=self.id)
@@ -1912,10 +2034,12 @@ class BaseVlan(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['vid']])
         return l.strip()
 
+    @property
     def interfaces(self):
         cls = getattr(pynetdot.models, 'InterfaceVlan')
         return cls.search(vlan=self.id)
 
+    @property
     def subnets(self):
         cls = getattr(pynetdot.models, 'Ipblock')
         return cls.search(vlan=self.id)
@@ -1938,6 +2062,7 @@ class BaseVlanGroup(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def vlans(self):
         cls = getattr(pynetdot.models, 'Vlan')
         return cls.search(vlangroup=self.id)
@@ -1969,14 +2094,17 @@ class BaseZone(n.Netdot):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
 
+    @property
     def records(self):
         cls = getattr(pynetdot.models, 'RR')
         return cls.search(zone=self.id)
 
+    @property
     def subnets(self):
         cls = getattr(pynetdot.models, 'SubnetZone')
         return cls.search(zone=self.id)
 
+    @property
     def aliases(self):
         cls = getattr(pynetdot.models, 'ZoneAlias')
         return cls.search(zone=self.id)

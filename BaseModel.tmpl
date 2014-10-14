@@ -17,6 +17,7 @@ class Base{{ model.class_name }}(n.Netdot):
         return l.strip()
 
 {% for link in reverse_links.get(model_name, []) %}
+    @property
     def {{ link.method }}(self):
         cls = getattr(pynetdot.models, '{{ link.target }}')
         return cls.search({{ link.field }}=self.id)

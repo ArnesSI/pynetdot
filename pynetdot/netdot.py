@@ -250,6 +250,21 @@ class Netdot(object):
         self._original_state = self._as_dict()
         return True
 
+    def delete(self):
+        """
+        Delete object from netdot database.
+        """
+        if not self.id:
+            # no id means this object was not created in netdot yet
+            return True
+        resource = '%s%s' % (self.resource, self.id)
+        response = _rest_delete(resource)
+        if response.status_code == 404:
+            return False
+        if response.status_code != requests.codes.ok:
+            response.raise_for_status()
+        return True
+
     def __getattr__(self, attr, default=None):
         """
         Unresolved instances do not have their attributes set yet. Resolve the

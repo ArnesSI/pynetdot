@@ -39,6 +39,33 @@ class BaseArpCacheEntry(n.Netdot):
         return l.strip()
 
 
+class BaseASN(n.Netdot):
+    resource = 'ASN/'
+    id_field = 'id'
+    _fields = [
+        f.StringField('description', display_name='Description'),
+        f.StringField('info', display_name='Comments'),
+        f.IntegerField('number', display_name='Number'),
+        f.StringField('rir', display_name='RIR'),
+    ]
+    _views = {'all': ['number', 'rir', 'description', 'info'], 'brief': ['number', 'rir', 'description']}
+
+    @property
+    def label(self):
+        l = ' '.join([unicode(getattr(self, l)) for l in ['number']])
+        return l.strip()
+
+    @property
+    def devices(self):
+        cls = getattr(pynetdot.models, 'Device')
+        return cls.search(bgplocalas=self.id)
+
+    @property
+    def ipblocks(self):
+        cls = getattr(pynetdot.models, 'Ipblock')
+        return cls.search(asn=self.id)
+
+
 class BaseAsset(n.Netdot):
     resource = 'Asset/'
     id_field = 'id'
@@ -73,6 +100,27 @@ class BaseAsset(n.Netdot):
     def device_modules(self):
         cls = getattr(pynetdot.models, 'DeviceModule')
         return cls.search(asset_id=self.id)
+
+
+class BaseAudit(n.Netdot):
+    resource = 'Audit/'
+    id_field = 'id'
+    _fields = [
+        f.StringField('fields', display_name='Fields'),
+        f.StringField('label', display_name='Label'),
+        f.IntegerField('object_id', display_name='Object ID'),
+        f.StringField('operation', display_name='Operation'),
+        f.StringField('tablename', display_name='Table'),
+        f.DateTimeField('tstamp', display_name='Timestamp'),
+        f.StringField('username', display_name='Username'),
+        f.StringField('vals', display_name='Values'),
+    ]
+    _views = {'all': ['tstamp', 'username', 'tablename', 'label', 'object_id', 'operation', 'fields', 'vals'], 'brief': ['tstamp', 'username', 'tablename', 'label', 'operation']}
+
+    @property
+    def label(self):
+        l = ' '.join([unicode(getattr(self, l)) for l in ['tstamp', 'username', 'label']])
+        return l.strip()
 
 
 class BaseAvailability(n.Netdot):
@@ -148,15 +196,18 @@ class BaseBGPPeering(n.Netdot):
         f.StringField('authkey', display_name='Auth key'),
         f.StringField('bgppeeraddr', display_name='Peer Adress'),
         f.StringField('bgppeerid', display_name='Peer ID'),
+        f.LinkField('contactlist', display_name='Contact List', link_to='ContactList'),
         f.LinkField('device', display_name='Device', link_to='Device'),
         f.LinkField('entity', display_name='Entity', link_to='Entity'),
         f.StringField('info', display_name='Comments'),
+        f.DateTimeField('last_changed', display_name='Last Changed'),
         f.IntegerField('max_v4_prefixes', display_name='Max IPv4 Prefixes'),
         f.IntegerField('max_v6_prefixes', display_name='Max IPv6 Prefixes'),
         f.BoolField('monitored', display_name='Monitored?'),
-        f.LinkField('monitorstatus', display_name='Monitored Status', link_to='MonitorStatus'),
+        f.StringField('peer_group', display_name='Peer Group'),
+        f.StringField('state', display_name='State'),
     ]
-    _views = {'all': ['device', 'entity', 'bgppeerid', 'bgppeeraddr', 'max_v4_prefixes', 'max_v6_prefixes', 'monitored', 'monitorstatus', 'authkey', 'info'], 'brief': ['device', 'entity', 'bgppeeraddr']}
+    _views = {'all': ['device', 'entity', 'bgppeerid', 'bgppeeraddr', 'state', 'last_changed', 'max_v4_prefixes', 'max_v6_prefixes', 'monitored', 'authkey', 'peer_group', 'contactlist', 'info'], 'brief': ['device', 'entity', 'bgppeeraddr']}
 
     @property
     def label(self):
@@ -301,7 +352,7 @@ class BaseCloset(n.Netdot):
         f.BoolField('asbestos_tiles', display_name='Asbestos Tiles'),
         f.StringField('catv_taps', display_name='CableTV Taps'),
         f.BoolField('converted_patch_panels', display_name='Converted Patch Panels'),
-        f.StringField('dimensions', display_name='Dimensions (")'),
+        f.StringField('dimensions', display_name='Dimensions'),
         f.BoolField('ground_buss', display_name='Ground Buss'),
         f.StringField('hvac_type', display_name='HVAC Type'),
         f.StringField('info', display_name='Comments'),
@@ -377,6 +428,11 @@ class BaseContactList(n.Netdot):
         return l.strip()
 
     @property
+    def peerings(self):
+        cls = getattr(pynetdot.models, 'BGPPeering')
+        return cls.search(contactlist=self.id)
+
+    @property
     def contacts(self):
         cls = getattr(pynetdot.models, 'Contact')
         return cls.search(contactlist=self.id)
@@ -450,7 +506,7 @@ class BaseDevice(n.Netdot):
         f.LinkField('asset_id', display_name='Asset', link_to='Asset'),
         f.BoolField('auto_dns', display_name='Auto DNS?'),
         f.StringField('bgpid', display_name='BGP ID'),
-        f.IntegerField('bgplocalas', display_name='BGP Local AS'),
+        f.LinkField('bgplocalas', display_name='BGP Local AS', link_to='ASN'),
         f.BoolField('canautoupdate', display_name='Auto Update?'),
         f.BoolField('collect_arp', display_name='Collect ARP?'),
         f.BoolField('collect_fwt', display_name='Collect FWT?'),
@@ -461,6 +517,7 @@ class BaseDevice(n.Netdot):
         f.DateField('down_from', display_name='Down From'),
         f.DateField('down_until', display_name='Down Until'),
         f.IntegerField('extension', display_name='Extension'),
+        f.LinkField('host_device', display_name='Host Device', link_to='Device'),
         f.StringField('info', display_name='Comments'),
         f.BoolField('ipforwarding', display_name='IP Forward?'),
         f.DateTimeField('last_arp', display_name='Last ARP'),
@@ -468,15 +525,20 @@ class BaseDevice(n.Netdot):
         f.DateTimeField('last_updated', display_name='Last Updated'),
         f.StringField('layers', display_name='OSI Layers'),
         f.BoolField('monitor_config', display_name='Monitor Config?'),
-        f.StringField('monitor_config_group', display_name='Config Group?'),
+        f.StringField('monitor_config_group', display_name='Config Group'),
         f.BoolField('monitored', display_name='Monitored?'),
         f.IntegerField('monitoring_path_cost', display_name='Path Cost'),
+        f.StringField('monitoring_template', display_name='Monitoring Template'),
         f.LinkField('monitorstatus', display_name='Monitored Status', link_to='MonitorStatus'),
         f.LinkField('name', display_name='Name', link_to='RR'),
-        f.StringField('oobname', display_name='Out-of-Band Hostname'),
-        f.StringField('oobnumber', display_name='Out-of-Band Tel Number'),
+        f.StringField('oobname', display_name='OOB Hostname #1'),
+        f.StringField('oobname_2', display_name='OOB Hostname #2'),
+        f.StringField('oobnumber', display_name='OOB Tel #1'),
+        f.StringField('oobnumber_2', display_name='OOB Tel #2'),
         f.StringField('os', display_name='OS'),
         f.LinkField('owner', display_name='Owner', link_to='Entity'),
+        f.StringField('power_outlet', display_name='Power #1'),
+        f.StringField('power_outlet_2', display_name='Power #2'),
         f.StringField('rack', display_name='Rack'),
         f.LinkField('room', display_name='Room', link_to='Room'),
         f.LinkField('site', display_name='Site', link_to='Site'),
@@ -503,7 +565,7 @@ class BaseDevice(n.Netdot):
         f.StringField('sysname', display_name='System Name'),
         f.LinkField('used_by', display_name='Used by', link_to='Entity'),
     ]
-    _views = {'all': ['name', 'asset_id', 'aliases', 'snmp_target', 'sysname', 'sysdescription', 'syslocation', 'ipforwarding', 'layers', 'os', 'extension', 'bgplocalas', 'auto_dns', 'bgpid', 'oobname', 'oobnumber', 'owner', 'used_by', 'monitored', 'monitoring_path_cost', 'monitorstatus', 'customer_managed', 'community', 'canautoupdate', 'site', 'monitor_config', 'monitor_config_group', 'snmp_managed', 'snmp_polling', 'collect_arp', 'last_arp', 'collect_fwt', 'collect_stp', 'last_fwt', 'snmp_bulk', 'snmp_version', 'snmp_securityname', 'snmp_authkey', 'snmp_authprotocol', 'snmp_privkey', 'snmp_privprotocol', 'snmp_securitylevel', 'snmp_conn_attempts', 'snmp_down', 'stp_enabled', 'stp_type', 'stp_mst_region', 'stp_mst_rev', 'stp_mst_digest', 'room', 'rack', 'last_updated', 'date_installed', 'down_from', 'down_until', 'info'], 'brief': ['name', 'asset_id', 'site', 'snmp_target']}
+    _views = {'all': ['name', 'asset_id', 'aliases', 'snmp_target', 'sysname', 'sysdescription', 'syslocation', 'ipforwarding', 'layers', 'os', 'host_device', 'extension', 'bgplocalas', 'auto_dns', 'bgpid', 'oobname', 'oobname_2', 'oobnumber', 'oobnumber_2', 'power_outlet', 'power_outlet_2', 'owner', 'used_by', 'monitored', 'monitoring_path_cost', 'monitoring_template', 'monitorstatus', 'customer_managed', 'community', 'canautoupdate', 'site', 'monitor_config', 'monitor_config_group', 'snmp_managed', 'snmp_polling', 'collect_arp', 'last_arp', 'collect_fwt', 'collect_stp', 'last_fwt', 'snmp_bulk', 'snmp_version', 'snmp_securityname', 'snmp_authkey', 'snmp_authprotocol', 'snmp_privkey', 'snmp_privprotocol', 'snmp_securitylevel', 'snmp_conn_attempts', 'snmp_down', 'stp_enabled', 'stp_type', 'stp_mst_region', 'stp_mst_rev', 'stp_mst_digest', 'room', 'rack', 'last_updated', 'date_installed', 'down_from', 'down_until', 'info'], 'brief': ['name', 'asset_id', 'site', 'snmp_target']}
 
     @property
     def label(self):
@@ -521,18 +583,23 @@ class BaseDevice(n.Netdot):
         return cls.search(device=self.id)
 
     @property
+    def hosted_devices(self):
+        cls = getattr(pynetdot.models, 'Device')
+        return cls.search(host_device=self.id)
+
+    @property
     def attributes(self):
         cls = getattr(pynetdot.models, 'DeviceAttr')
         return cls.search(device=self.id)
 
     @property
-    def contacts(self):
-        cls = getattr(pynetdot.models, 'DeviceContacts')
+    def modules(self):
+        cls = getattr(pynetdot.models, 'DeviceModule')
         return cls.search(device=self.id)
 
     @property
-    def modules(self):
-        cls = getattr(pynetdot.models, 'DeviceModule')
+    def contacts(self):
+        cls = getattr(pynetdot.models, 'DeviceContacts')
         return cls.search(device=self.id)
 
     @property
@@ -789,6 +856,11 @@ class BaseEntity(n.Netdot):
         return cls.search(vendor=self.id)
 
     @property
+    def links(self):
+        cls = getattr(pynetdot.models, 'SiteLink')
+        return cls.search(entity=self.id)
+
+    @property
     def owned_devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(owner=self.id)
@@ -832,11 +904,6 @@ class BaseEntity(n.Netdot):
     def products(self):
         cls = getattr(pynetdot.models, 'Product')
         return cls.search(manufacturer=self.id)
-
-    @property
-    def links(self):
-        cls = getattr(pynetdot.models, 'SiteLink')
-        return cls.search(entity=self.id)
 
 
 class BaseEntityRole(n.Netdot):
@@ -1129,21 +1196,24 @@ class BaseIpblock(n.Netdot):
     id_field = 'id'
     _fields = [
         f.StringField('address', display_name='Address'),
+        f.LinkField('asn', display_name='ASN', link_to='ASN'),
         f.StringField('description', display_name='Description'),
         f.DateTimeField('first_seen', display_name='First Seen'),
         f.StringField('info', display_name='Comments'),
         f.LinkField('interface', display_name='Interface', link_to='Interface'),
         f.DateTimeField('last_seen', display_name='Last Seen'),
+        f.BoolField('monitored', display_name='Monitored?'),
         f.LinkField('owner', display_name='Owner', link_to='Entity'),
         f.LinkField('parent', display_name='Parent', link_to='Ipblock'),
         f.IntegerField('prefix', display_name='Prefix Length'),
+        f.StringField('rir', display_name='RIR'),
         f.LinkField('status', display_name='Status', link_to='IpblockStatus'),
         f.BoolField('use_network_broadcast', display_name='Use Network/Broadcast?'),
         f.LinkField('used_by', display_name='Used by', link_to='Entity'),
         f.IntegerField('version', display_name='Version(4/6)'),
         f.LinkField('vlan', display_name='Vlan', link_to='Vlan'),
     ]
-    _views = {'address_brief': ['address', 'status', 'used_by', 'description', 'last_seen'], 'all': ['address', 'prefix', 'version', 'parent', 'interface', 'vlan', 'status', 'owner', 'used_by', 'description', 'first_seen', 'last_seen', 'use_network_broadcast', 'info'], 'brief': ['address', 'prefix', 'status', 'used_by', 'description', 'last_seen'], 'subnet_brief': ['address', 'prefix', 'status', 'vlan', 'used_by', 'description'], 'container_brief': ['address', 'prefix', 'status', 'owner', 'used_by', 'description']}
+    _views = {'address_brief': ['address', 'status', 'used_by', 'description', 'last_seen'], 'all': ['address', 'prefix', 'version', 'parent', 'interface', 'vlan', 'status', 'monitored', 'owner', 'used_by', 'rir', 'asn', 'description', 'first_seen', 'last_seen', 'use_network_broadcast', 'info'], 'brief': ['address', 'prefix', 'status', 'used_by', 'description', 'last_seen'], 'subnet_brief': ['address', 'prefix', 'status', 'vlan', 'used_by', 'description'], 'container_brief': ['address', 'prefix', 'status', 'owner', 'used_by', 'rir', 'asn', 'description']}
 
     @property
     def label(self):
@@ -1308,11 +1378,6 @@ class BaseMonitorStatus(n.Netdot):
     def label(self):
         l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
         return l.strip()
-
-    @property
-    def bgppeers(self):
-        cls = getattr(pynetdot.models, 'BGPPeering')
-        return cls.search(monitorstatus=self.id)
 
     @property
     def devices(self):
@@ -1870,6 +1935,16 @@ class BaseSite(n.Netdot):
         return l.strip()
 
     @property
+    def farlinks(self):
+        cls = getattr(pynetdot.models, 'SiteLink')
+        return cls.search(farend=self.id)
+
+    @property
+    def nearlinks(self):
+        cls = getattr(pynetdot.models, 'SiteLink')
+        return cls.search(nearend=self.id)
+
+    @property
     def devices(self):
         cls = getattr(pynetdot.models, 'Device')
         return cls.search(site=self.id)
@@ -1888,16 +1963,6 @@ class BaseSite(n.Netdot):
     def people(self):
         cls = getattr(pynetdot.models, 'Person')
         return cls.search(location=self.id)
-
-    @property
-    def farlinks(self):
-        cls = getattr(pynetdot.models, 'SiteLink')
-        return cls.search(farend=self.id)
-
-    @property
-    def nearlinks(self):
-        cls = getattr(pynetdot.models, 'SiteLink')
-        return cls.search(nearend=self.id)
 
     @property
     def subnets(self):

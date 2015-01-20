@@ -115,6 +115,9 @@ class Netdot(object):
 
     @classmethod
     def _build_search_params(cls, **kwargs):
+        for k,v in kwargs.items():
+            if isinstance(v, Netdot):
+                kwargs[k] = v.id
         return kwargs
 
     @classmethod

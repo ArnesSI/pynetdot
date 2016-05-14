@@ -4,10 +4,10 @@ import sys
 from pprint import pprint
 from warnings import warn
 from xml.etree import ElementTree as ET
-import pynetdot
+from pynetdot.api import NetdotAPI
 from pynetdot.fields import *
 
-pynetdot.setup(url=sys.argv[1], username=sys.argv[2], password=sys.argv[3])
+api = NetdotAPI(url=sys.argv[1], username=sys.argv[2], password=sys.argv[3])
 
 # TODO get this list dynamically from netdot (somehow)
 resources = [
@@ -119,7 +119,7 @@ models = {}
 reverse_links = {}
 
 for r in resources:
-    resp = pynetdot.netdot._rest_get('%s/meta_data' % r)
+    resp = api.get('%s/meta_data' % r)
     xml = ET.fromstring(resp.text)
     model = {}
     model['resource'] = xml.attrib['name']

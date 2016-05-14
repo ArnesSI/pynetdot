@@ -1,103 +1,16 @@
 import logging
-import requests
-from simple_cache import SimpleCache
-from serializer import *
+from serializer import parse_xml
+from api import NetdotAPI
 
 logger = logging.getLogger(__name__)
-cache = SimpleCache.getInstance()
-
-HEADERS = {
-    'User_Agent':'python_confgen',
-    'Accept':'text/xml; version=1.0',
-}
-COOKIES_CACHE_KEY = 'netdot_cookie'
+api = None
 
 def setup(url='http://localhost/netdot/', username='admin', password='password'):
-    if not url.endswith('/'):
-        url = url + '/'
-    Netdot.NETDOT_URL = url
-    Netdot.NETDOT_USERNAME = username
-    Netdot.NETDOT_PASSWORD = password
+    global api
+    api = NetdotAPI(url=url, username=username, password=password)
 
-
-    
-
-
-
-
-#def get_xml(obj, search_params, **kwargs):
-    #resp = _rest_get(obj, params=search_params)
-    #if resp.status_code != requests.codes.ok:
-        #if resp.status_code == 404 and 'default' in kwargs:
-            #return kwargs['default']
-        #resp.raise_for_status()
-    #return resp.text
-
-#def get_attr(obj, search_params, attr, **kwargs):
-    #txt = get_xml(obj, search_params, **kwargs)
-    #value = netodt_deserializer.get_first_attr(txt, attr)
-    #return value
-
-def _rest_get(resource, **kwargs):
-    url = Netdot.NETDOT_URL + 'rest/' + resource
-    response = requests.get(url, cookies=_get_cookies(), headers=HEADERS, **kwargs)
-    if response.status_code == 403:
-        response = requests.get(url, cookies=_get_cookies(clear_cache=True), headers=HEADERS, **kwargs)
-    return response
-
-def _rest_post(resource, params, **kwargs):
-    url = Netdot.NETDOT_URL + 'rest/' + resource
-    response = requests.post(url, cookies=_get_cookies(), headers=HEADERS, params=params, **kwargs)
-    if response.status_code == 403:
-        response = requests.post(url, cookies=_get_cookies(clear_cache=True), headers=HEADERS, params=params, **kwargs)
-    return response
-
-def _rest_delete(resource, **kwargs):
-    url = Netdot.NETDOT_URL + 'rest/' + resource
-    response = requests.delete(url, cookies=_get_cookies(), headers=HEADERS, **kwargs)
-    if response.status_code == 403:
-        response = requests.delete(url, cookies=_get_cookies(clear_cache=True), headers=HEADERS, **kwargs)
-    return response
-
-def _get_cookies(clear_cache=False):
-    if clear_cache:
-        cookies = _login()
-        cache.set(COOKIES_CACHE_KEY, cookies)
-        return cookies
-    else:
-        if not cache.get(COOKIES_CACHE_KEY):
-            cookies = _login()
-            cache.set(COOKIES_CACHE_KEY, cookies)
-            return cookies
-        else:
-            return cache.get(COOKIES_CACHE_KEY)
-
-def _login():
-    login_url = Netdot.NETDOT_URL + 'NetdotLogin'
-    username = Netdot.NETDOT_USERNAME
-    password = Netdot.NETDOT_PASSWORD
-    params = {
-        'destination':'index.html', 
-        'credential_0':username, 
-        'credential_1':password, 
-        'permanent_session':1,
-    }
-    response = requests.post(login_url, data=params, headers=HEADERS, allow_redirects=False)
-    if response.ok:
-        logger.info('Logged into netdot with username %s' % username)
-        return response.cookies
-    else:
-        raise AttributeError('Invalid Credentials')
-
-
-
-# -----------------
 
 class Netdot(object):
-    global NETDOT_URL, NETDOT_USERNAME, NETDOT_PASSWORD
-    NETDOT_URL = 'http://localhost/netdot/'
-    NETDOT_USERNAME = 'admin'
-    NETDOT_PASSWORD = 'password'
 
     resource = None
 
@@ -117,7 +30,7 @@ class Netdot(object):
     def _build_search_params(cls, **kwargs):
         for k,v in kwargs.items():
             if isinstance(v, Netdot):
-                kwargs[k] = v.id
+                kwargs[k] = str(v.id)
         return kwargs
 
     @classmethod
@@ -133,10 +46,10 @@ class Netdot(object):
     @classmethod
     def _search(cls, **kwargs):
         params = cls._build_search_params(**kwargs)
-        response = _rest_get(cls.resource, params=params)
+        response = api.get(cls.resource, params=params)
         if response.status_code == 404:
             return []
-        if response.status_code != requests.codes.ok:
+        if not response.ok:
             response.raise_for_status()
         xml = parse_xml(response.text)
         results = []
@@ -167,10 +80,10 @@ class Netdot(object):
         if not self.id:
             raise Exception('id not set')
         resource = '%s%s' % (self.resource, self.id)
-        response = _rest_get(resource)
+        response = api.get(resource)
         if response.status_code == 404:
-            raise Exception('%s with id %d does not existin netdot' % (self.resource, self.id))
-        if response.status_code != requests.codes.ok:
+            raise Exception('%s with id %d does not exist in netdot' % (self.resource, self.id))
+        if not response.ok:
             response.raise_for_status()
         self._from_response(response)
 
@@ -182,15 +95,15 @@ class Netdot(object):
 
     @classmethod
     def _from_netdot(cls, obj, attrs):
-        """
-        Create instance fields from netdots XML response.
-        """
+        '''
+        Create instance fields from netdot's XML response.
+        '''
         if not isinstance(obj, cls):
             raise Exception('Passed object is not an instance of this class')
         obj._attrs = attrs
         for field in cls._fields:
             field.parse(obj)
-        obj.id = attrs['id']
+        obj.id = int(attrs['id'])
         obj._resolved = True
         obj._original_state = obj._as_dict()
 
@@ -201,6 +114,9 @@ class Netdot(object):
         return values
 
     def get_dirty_fields(self):
+        '''
+        Return a list of fields that have been modified.
+        '''
         new_state = self._as_dict()
         changed_fields = dict([
             (key, value)
@@ -210,25 +126,35 @@ class Netdot(object):
         return changed_fields.keys()
 
     def is_dirty(self):
+        '''
+        Returns True if object was modified.
+        '''
         if not self.id:
             return True
         return bool(self.get_dirty_fields())
 
     def display(self, view='all'):
-        print '%s:' % self.label
+        '''
+        Returns a string displaying the object attributes for the given view.
+        '''
+        ds = u'%s:\n' % self.label
         if view=='all' and not self._views.get(view):
             for f in self._fields:
                 value = getattr(self, f.name)
-                print "\t%s: %s" % (f.name, value)
+                ds += u'\t%s: %s\n' % (f.name, value)
         elif self._views.get(view):
             for f_name in self._views.get(view):
                 value = getattr(self, f_name)
-                print "\t%s: %s" % (f_name, value)
+                ds += u'\t%s: %s\n' % (f_name, value)
         else:
             raise Exception('View %s not defined' % view)
+        return ds
 
     def dump(self):
-        self.display('all')
+        '''
+        Returns a string displaying all attribures of the object.
+        '''
+        return self.display('all')
 
     def save(self):
         """
@@ -239,7 +165,12 @@ class Netdot(object):
             # There were no changes
             return True
         if self.id:
-            fields = self.get_dirty_fields()
+            field_names = self.get_dirty_fields()
+            fields = []
+            for fn in field_names:
+                for f in self._fields:
+                    if f.name == fn:
+                        fields.append(f)
             resource = '%s%s' % (self.resource, self.id)
         else:
             fields = self._fields
@@ -247,11 +178,12 @@ class Netdot(object):
         values = self._as_dict()
         params = {}
         for f in fields:
-            params[f.name] = values.get(f.name)
-        response = _rest_post(resource, params)
+            value_serialized = f.serialize(self)
+            params[f.name] = value_serialized
+        response = api.post(resource, params)
         if response.status_code == 404:
             return False
-        if response.status_code != requests.codes.ok:
+        if not response.ok:
             response.raise_for_status()
         # Reset all values from server response
         self._from_response(response)
@@ -267,10 +199,10 @@ class Netdot(object):
             # no id means this object was not created in netdot yet
             return True
         resource = '%s%s' % (self.resource, self.id)
-        response = _rest_delete(resource)
+        response = api.delete(resource)
         if response.status_code == 404:
             return False
-        if response.status_code != requests.codes.ok:
+        if not response.ok:
             response.raise_for_status()
         # Unset id so saving this instance again will create a new object in netdot DB
         self.id = None
@@ -296,3 +228,9 @@ class Netdot(object):
     def __str__(self):
         u = unicode(self)
         return u.encode('utf-8', 'replace')
+
+    def __repr__(self):
+        if not self.id:
+            return '%s.%s()' % (self.__class__.__module__, self.__class__.__name__)
+        else:
+            return '%s.%s("%s")' % (self.__class__.__module__, self.__class__.__name__, self.label)

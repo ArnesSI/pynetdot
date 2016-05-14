@@ -1,2 +1,2 @@
-from netdot import *
+from netdot import setup
 from models import *

@@ -10,6 +10,17 @@ class BaseField(object):
         self.default = kwargs.pop('default', None)
         self.display_name = kwargs.pop('display_name', name)
 
+    def serialize(self, obj):
+        value = getattr(obj, self.name)
+        if value is None:
+            return ''
+        elif value == False:
+            return '0'
+        elif value == True:
+            return '1'
+        else:
+            return str(value)
+
     def parse(self, obj):
         value = obj._attrs.get(self.name, self.default)
         value = self._clean(value)
@@ -52,6 +63,8 @@ class DateField(BaseField):
         date = datetime_parser.parse(v)
         return date.date()
 
+    # TODO serialize
+
     def raw(self, v):
         if (isinstance(v, date)):
             return v.strftime('%Y-%m-%d')
@@ -73,6 +86,8 @@ class DateTimeField(BaseField):
             # yes, this is a bit of a hack
             return None
         return date
+
+    # TODO serialize
 
     def raw(self, v):
         if (isinstance(v, datetime)):
@@ -100,6 +115,18 @@ class LinkField(BaseField):
         self.link_to = kwargs.pop('link_to')
         super(LinkField, self).__init__(name, **kwargs)
 
+    def serialize(self, obj):
+        value = getattr(obj, self.name)
+        if hasattr(value, 'id'):
+            return str(value.id)
+        else:
+            try:
+                int(value)
+            except TypeError, ValueError:
+                return ''
+            else:
+                return str(value)
+
     def parse(self, obj):
         xlink = '%s_xlink' % self.name
         link = obj._attrs.get(xlink, None)
@@ -113,7 +140,7 @@ class LinkField(BaseField):
 
     def raw(self, v):
         if hasattr(v, 'id'):
-            return v.id
+            return int(v.id)
         elif not v:
-            return ''
-        return v
+            return None
+        return int(v)

@@ -3,6 +3,9 @@ import pynetdot.fields as f
 import pynetdot.models
 
 class BaseArpCache(n.Netdot):
+    '''
+    Device ARP Cache
+    '''
     resource = 'ArpCache/'
     id_field = 'id'
     _fields = [
@@ -23,6 +26,9 @@ class BaseArpCache(n.Netdot):
 
 
 class BaseArpCacheEntry(n.Netdot):
+    '''
+    ARP Cache Entry
+    '''
     resource = 'ArpCacheEntry/'
     id_field = 'id'
     _fields = [
@@ -40,6 +46,9 @@ class BaseArpCacheEntry(n.Netdot):
 
 
 class BaseASN(n.Netdot):
+    '''
+    Autonomous System Number
+    '''
     resource = 'ASN/'
     id_field = 'id'
     _fields = [
@@ -67,6 +76,10 @@ class BaseASN(n.Netdot):
 
 
 class BaseAsset(n.Netdot):
+    '''
+    Assets represent network hardware (devices or modules). If an asset is
+    installed, it will be associated with a device or devicemodule object.
+    '''
     resource = 'Asset/'
     id_field = 'id'
     _fields = [
@@ -103,6 +116,9 @@ class BaseAsset(n.Netdot):
 
 
 class BaseAudit(n.Netdot):
+    '''
+    Audit Table to record database operations made by users
+    '''
     resource = 'Audit/'
     id_field = 'id'
     _fields = [
@@ -124,6 +140,9 @@ class BaseAudit(n.Netdot):
 
 
 class BaseAvailability(n.Netdot):
+    '''
+    A Time Period
+    '''
     resource = 'Availability/'
     id_field = 'id'
     _fields = [
@@ -164,6 +183,10 @@ class BaseAvailability(n.Netdot):
 
 
 class BaseBackboneCable(n.Netdot):
+    '''
+    A Backbone cable that interconnects two sites.  Backbone cables can have
+    multiple strands.
+    '''
     resource = 'BackboneCable/'
     id_field = 'id'
     _fields = [
@@ -190,6 +213,9 @@ class BaseBackboneCable(n.Netdot):
 
 
 class BaseBGPPeering(n.Netdot):
+    '''
+    A BGP Peering
+    '''
     resource = 'BGPPeering/'
     id_field = 'id'
     _fields = [
@@ -216,6 +242,9 @@ class BaseBGPPeering(n.Netdot):
 
 
 class BaseCableStrand(n.Netdot):
+    '''
+    A single cable strand/pair
+    '''
     resource = 'CableStrand/'
     id_field = 'id'
     _fields = [
@@ -247,6 +276,9 @@ class BaseCableStrand(n.Netdot):
 
 
 class BaseCableType(n.Netdot):
+    '''
+    Types of Cables
+    '''
     resource = 'CableType/'
     id_field = 'id'
     _fields = [
@@ -272,6 +304,11 @@ class BaseCableType(n.Netdot):
 
 
 class BaseCircuit(n.Netdot):
+    '''
+    A circuit can either be a WAN link provided by an external entity, or a
+    set of [spliced] backbone cable strands terminated into two device
+    interfaces
+    '''
     resource = 'Circuit/'
     id_field = 'id'
     _fields = [
@@ -305,6 +342,9 @@ class BaseCircuit(n.Netdot):
 
 
 class BaseCircuitStatus(n.Netdot):
+    '''
+    Circuit status
+    '''
     resource = 'CircuitStatus/'
     id_field = 'id'
     _fields = [
@@ -325,6 +365,9 @@ class BaseCircuitStatus(n.Netdot):
 
 
 class BaseCircuitType(n.Netdot):
+    '''
+    Circuit Type
+    '''
     resource = 'CircuitType/'
     id_field = 'id'
     _fields = [
@@ -345,6 +388,11 @@ class BaseCircuitType(n.Netdot):
 
 
 class BaseCloset(n.Netdot):
+    '''
+    A Communications Closet.  A Closet is different from a normal Room in two
+    ways: a) Backbone Cables (inter and intra building) terminate in Closets.
+    b) Horizontal Cables _start_ in Closets and _end_ in Rooms
+    '''
     resource = 'Closet/'
     id_field = 'id'
     _fields = [
@@ -393,6 +441,12 @@ class BaseCloset(n.Netdot):
 
 
 class BaseContact(n.Netdot):
+    '''
+    A Contact object is basically a Role of a certain Person.  People can be
+    associated with one or more resources (devices, services, etc) for which
+    they could be contacted.  Each Contact object represents one of these
+    roles.
+    '''
     resource = 'Contact/'
     id_field = 'id'
     _fields = [
@@ -414,6 +468,9 @@ class BaseContact(n.Netdot):
 
 
 class BaseContactList(n.Netdot):
+    '''
+    A list of contacts
+    '''
     resource = 'ContactList/'
     id_field = 'id'
     _fields = [
@@ -479,6 +536,9 @@ class BaseContactList(n.Netdot):
 
 
 class BaseContactType(n.Netdot):
+    '''
+    Type of contact
+    '''
     resource = 'ContactType/'
     id_field = 'id'
     _fields = [
@@ -499,6 +559,12 @@ class BaseContactType(n.Netdot):
 
 
 class BaseDevice(n.Netdot):
+    '''
+    A network device.  Particularly, Devices in Netdot are network
+    infrastructure devices that network administrators care about for
+    inventory, monitoring and management purposes.  Not to be confused with
+    end nodes
+    '''
     resource = 'Device/'
     id_field = 'id'
     _fields = [
@@ -619,6 +685,9 @@ class BaseDevice(n.Netdot):
 
 
 class BaseDeviceAttr(n.Netdot):
+    '''
+    A Device Attribute
+    '''
     resource = 'DeviceAttr/'
     id_field = 'id'
     _fields = [
@@ -635,6 +704,9 @@ class BaseDeviceAttr(n.Netdot):
 
 
 class BaseDeviceAttrName(n.Netdot):
+    '''
+    A Device Attributes Name
+    '''
     resource = 'DeviceAttrName/'
     id_field = 'id'
     _fields = [
@@ -655,6 +727,9 @@ class BaseDeviceAttrName(n.Netdot):
 
 
 class BaseDeviceContacts(n.Netdot):
+    '''
+    Device to Contactlist join table
+    '''
     resource = 'DeviceContacts/'
     id_field = 'id'
     _fields = [
@@ -670,6 +745,9 @@ class BaseDeviceContacts(n.Netdot):
 
 
 class BaseDeviceModule(n.Netdot):
+    '''
+    A Device Physical Entity
+    '''
     resource = 'DeviceModule/'
     id_field = 'id'
     _fields = [
@@ -699,6 +777,9 @@ class BaseDeviceModule(n.Netdot):
 
 
 class BaseDhcpAttr(n.Netdot):
+    '''
+    A DHCP Attribute or Parameter
+    '''
     resource = 'DhcpAttr/'
     id_field = 'id'
     _fields = [
@@ -715,6 +796,9 @@ class BaseDhcpAttr(n.Netdot):
 
 
 class BaseDhcpAttrName(n.Netdot):
+    '''
+    A DHCP Attributes Name
+    '''
     resource = 'DhcpAttrName/'
     id_field = 'id'
     _fields = [
@@ -737,6 +821,9 @@ class BaseDhcpAttrName(n.Netdot):
 
 
 class BaseDhcpScope(n.Netdot):
+    '''
+    A DHCP Scope
+    '''
     resource = 'DhcpScope/'
     id_field = 'id'
     _fields = [
@@ -782,6 +869,9 @@ class BaseDhcpScope(n.Netdot):
 
 
 class BaseDhcpScopeType(n.Netdot):
+    '''
+    A DHCP Scope Type
+    '''
     resource = 'DhcpScopeType/'
     id_field = 'id'
     _fields = [
@@ -802,6 +892,9 @@ class BaseDhcpScopeType(n.Netdot):
 
 
 class BaseDhcpScopeUse(n.Netdot):
+    '''
+    Relationship between a scopes and scope templates
+    '''
     resource = 'DhcpScopeUse/'
     id_field = 'id'
     _fields = [
@@ -817,6 +910,9 @@ class BaseDhcpScopeUse(n.Netdot):
 
 
 class BaseEntity(n.Netdot):
+    '''
+    An organization related to the network in some way
+    '''
     resource = 'Entity/'
     id_field = 'id'
     _fields = [
@@ -907,6 +1003,10 @@ class BaseEntity(n.Netdot):
 
 
 class BaseEntityRole(n.Netdot):
+    '''
+    An Entity might play different roles.  For example, the same Entity can be
+    both a Customer and a Peer.
+    '''
     resource = 'EntityRole/'
     id_field = 'id'
     _fields = [
@@ -922,6 +1022,9 @@ class BaseEntityRole(n.Netdot):
 
 
 class BaseEntitySite(n.Netdot):
+    '''
+    Entity to Site join table
+    '''
     resource = 'EntitySite/'
     id_field = 'id'
     _fields = [
@@ -937,6 +1040,9 @@ class BaseEntitySite(n.Netdot):
 
 
 class BaseEntityType(n.Netdot):
+    '''
+    Types of Entities
+    '''
     resource = 'EntityType/'
     id_field = 'id'
     _fields = [
@@ -957,6 +1063,9 @@ class BaseEntityType(n.Netdot):
 
 
 class BaseFiberType(n.Netdot):
+    '''
+    Types of Fiber
+    '''
     resource = 'FiberType/'
     id_field = 'id'
     _fields = [
@@ -977,6 +1086,9 @@ class BaseFiberType(n.Netdot):
 
 
 class BaseFloor(n.Netdot):
+    '''
+    Floor Table
+    '''
     resource = 'Floor/'
     id_field = 'id'
     _fields = [
@@ -998,6 +1110,11 @@ class BaseFloor(n.Netdot):
 
 
 class BaseFWTable(n.Netdot):
+    '''
+    Bridge Forwarding Table.  One of these is created every time a Device is
+    queried.  Entries in these tables contain physical addresses and the ports
+    where they have been seen.
+    '''
     resource = 'FWTable/'
     id_field = 'id'
     _fields = [
@@ -1018,6 +1135,9 @@ class BaseFWTable(n.Netdot):
 
 
 class BaseFWTableEntry(n.Netdot):
+    '''
+    Bridge Forwarding Table entry
+    '''
     resource = 'FWTableEntry/'
     id_field = 'id'
     _fields = [
@@ -1034,6 +1154,9 @@ class BaseFWTableEntry(n.Netdot):
 
 
 class BaseGroupRight(n.Netdot):
+    '''
+    Join between a ContactList and its Access Rights
+    '''
     resource = 'GroupRight/'
     id_field = 'id'
     _fields = [
@@ -1049,6 +1172,9 @@ class BaseGroupRight(n.Netdot):
 
 
 class BaseHorizontalCable(n.Netdot):
+    '''
+    Horizontal Cable
+    '''
     resource = 'HorizontalCable/'
     id_field = 'id'
     _fields = [
@@ -1079,6 +1205,9 @@ class BaseHorizontalCable(n.Netdot):
 
 
 class BaseHostAudit(n.Netdot):
+    '''
+    DNS and DHCP changes
+    '''
     resource = 'HostAudit/'
     id_field = 'id'
     _fields = [
@@ -1096,6 +1225,9 @@ class BaseHostAudit(n.Netdot):
 
 
 class BaseInterface(n.Netdot):
+    '''
+    An interface associated with a device
+    '''
     resource = 'Interface/'
     id_field = 'id'
     _fields = [
@@ -1173,6 +1305,9 @@ class BaseInterface(n.Netdot):
 
 
 class BaseInterfaceVlan(n.Netdot):
+    '''
+    Interface to VLAN join table
+    '''
     resource = 'InterfaceVlan/'
     id_field = 'id'
     _fields = [
@@ -1192,6 +1327,10 @@ class BaseInterfaceVlan(n.Netdot):
 
 
 class BaseIpblock(n.Netdot):
+    '''
+    An IP (v4 or v6) CIDR block, which can represent both individual addresses
+    and blocks of addresses (subnets, etc).
+    '''
     resource = 'Ipblock/'
     id_field = 'id'
     _fields = [
@@ -1272,6 +1411,9 @@ class BaseIpblock(n.Netdot):
 
 
 class BaseIpblockAttr(n.Netdot):
+    '''
+    An Ipblock Attribute
+    '''
     resource = 'IpblockAttr/'
     id_field = 'id'
     _fields = [
@@ -1288,6 +1430,9 @@ class BaseIpblockAttr(n.Netdot):
 
 
 class BaseIpblockAttrName(n.Netdot):
+    '''
+    An Ipblock Attributes Name
+    '''
     resource = 'IpblockAttrName/'
     id_field = 'id'
     _fields = [
@@ -1308,6 +1453,9 @@ class BaseIpblockAttrName(n.Netdot):
 
 
 class BaseIpblockStatus(n.Netdot):
+    '''
+    IP block status
+    '''
     resource = 'IpblockStatus/'
     id_field = 'id'
     _fields = [
@@ -1327,6 +1475,9 @@ class BaseIpblockStatus(n.Netdot):
 
 
 class BaseIpService(n.Netdot):
+    '''
+    A relationship between an IP address and a running Internet service
+    '''
     resource = 'IpService/'
     id_field = 'id'
     _fields = [
@@ -1345,6 +1496,9 @@ class BaseIpService(n.Netdot):
 
 
 class BaseMaintContract(n.Netdot):
+    '''
+    Device Maintenance Contract
+    '''
     resource = 'MaintContract/'
     id_field = 'id'
     _fields = [
@@ -1366,6 +1520,9 @@ class BaseMaintContract(n.Netdot):
 
 
 class BaseMonitorStatus(n.Netdot):
+    '''
+    Status information for what is monitored
+    '''
     resource = 'MonitorStatus/'
     id_field = 'id'
     _fields = [
@@ -1396,6 +1553,9 @@ class BaseMonitorStatus(n.Netdot):
 
 
 class BaseOUI(n.Netdot):
+    '''
+    Organizationally Unique Identifier
+    '''
     resource = 'OUI/'
     id_field = 'id'
     _fields = [
@@ -1411,6 +1571,9 @@ class BaseOUI(n.Netdot):
 
 
 class BasePerson(n.Netdot):
+    '''
+    Information about an individual
+    '''
     resource = 'Person/'
     id_field = 'id'
     _fields = [
@@ -1448,6 +1611,9 @@ class BasePerson(n.Netdot):
 
 
 class BasePhysAddr(n.Netdot):
+    '''
+    A physical or MAC address
+    '''
     resource = 'PhysAddr/'
     id_field = 'id'
     _fields = [
@@ -1495,6 +1661,9 @@ class BasePhysAddr(n.Netdot):
 
 
 class BasePhysAddrAttr(n.Netdot):
+    '''
+    Custom attributes can be assigned to physical (MAC) addresses
+    '''
     resource = 'PhysAddrAttr/'
     id_field = 'id'
     _fields = [
@@ -1511,6 +1680,9 @@ class BasePhysAddrAttr(n.Netdot):
 
 
 class BasePhysAddrAttrName(n.Netdot):
+    '''
+    Custom attribute name for physical (MAC) addresses
+    '''
     resource = 'PhysAddrAttrName/'
     id_field = 'id'
     _fields = [
@@ -1531,6 +1703,9 @@ class BasePhysAddrAttrName(n.Netdot):
 
 
 class BaseProduct(n.Netdot):
+    '''
+    Product Names
+    '''
     resource = 'Product/'
     id_field = 'id'
     _fields = [
@@ -1558,6 +1733,9 @@ class BaseProduct(n.Netdot):
 
 
 class BaseProductType(n.Netdot):
+    '''
+    Types of network devices
+    '''
     resource = 'ProductType/'
     id_field = 'id'
     _fields = [
@@ -1578,6 +1756,9 @@ class BaseProductType(n.Netdot):
 
 
 class BaseRoom(n.Netdot):
+    '''
+    Room
+    '''
     resource = 'Room/'
     id_field = 'id'
     _fields = [
@@ -1613,6 +1794,10 @@ class BaseRoom(n.Netdot):
 
 
 class BaseRR(n.Netdot):
+    '''
+    DNS Resource Record. Also known as the "owner", this object in Netdot
+    groups all the records with the same name.
+    '''
     resource = 'RR/'
     id_field = 'id'
     _fields = [
@@ -1694,6 +1879,12 @@ class BaseRR(n.Netdot):
 
 
 class BaseRRADDR(n.Netdot):
+    '''
+    A DNS "A" record makes a connection between a domain name and an IPv4
+    address.  A "AAAA" record does the same thing, but with IPv6 addresses. A
+    "dual-stack" host can have both an A record and a AAAA record at the same
+    time.
+    '''
     resource = 'RRADDR/'
     id_field = 'id'
     _fields = [
@@ -1710,6 +1901,11 @@ class BaseRRADDR(n.Netdot):
 
 
 class BaseRRCNAME(n.Netdot):
+    '''
+    DNS CNAME records map an alias or nickname to the real or Canonical name
+    which may lie outside the current zone. Canonical means expected or real
+    name.
+    '''
     resource = 'RRCNAME/'
     id_field = 'id'
     _fields = [
@@ -1726,6 +1922,11 @@ class BaseRRCNAME(n.Netdot):
 
 
 class BaseRRDS(n.Netdot):
+    '''
+    The DS Resource Record refers to a DNSKEY RR and is used in the DNS DNSKEY
+    authentication process.  A DS RR refers to a DNSKEY RR by storing the key
+    tag, algorithm number, and a digest of the DNSKEY RR.
+    '''
     resource = 'RRDS/'
     id_field = 'id'
     _fields = [
@@ -1745,6 +1946,14 @@ class BaseRRDS(n.Netdot):
 
 
 class BaseRRHINFO(n.Netdot):
+    '''
+    DNS HINFO records are used to acquire general information about a host.
+    The main use is for protocols such as FTP that can use special procedures
+    when talking between machines or operating systems of the same type.
+    These may also be useful just for inventory purposes.  Publishing HINFO
+    records may pose a security risk, thus Netdot administrators may choose
+    not to include these records when exporting zone data
+    '''
     resource = 'RRHINFO/'
     id_field = 'id'
     _fields = [
@@ -1762,6 +1971,9 @@ class BaseRRHINFO(n.Netdot):
 
 
 class BaseRRLOC(n.Netdot):
+    '''
+    Location Information. See RFC1876
+    '''
     resource = 'RRLOC/'
     id_field = 'id'
     _fields = [
@@ -1783,6 +1995,14 @@ class BaseRRLOC(n.Netdot):
 
 
 class BaseRRMX(n.Netdot):
+    '''
+    A mail exchanger record (MX record) is a type of resource record in the
+    Domain Name System that specifies a mail server responsible for accepting
+    email messages on behalf of a recipient's domain and a preference value
+    used to prioritize mail delivery if multiple mail servers are available.
+    The set of MX records of a domain name specifies how email should be
+    routed with the Simple Mail Transfer Protocol.
+    '''
     resource = 'RRMX/'
     id_field = 'id'
     _fields = [
@@ -1800,6 +2020,9 @@ class BaseRRMX(n.Netdot):
 
 
 class BaseRRNAPTR(n.Netdot):
+    '''
+    Naming Authority Pointer (NAPTR) Resource Record (RFC3403)
+    '''
     resource = 'RRNAPTR/'
     id_field = 'id'
     _fields = [
@@ -1821,6 +2044,9 @@ class BaseRRNAPTR(n.Netdot):
 
 
 class BaseRRNS(n.Netdot):
+    '''
+    DNS NS Record
+    '''
     resource = 'RRNS/'
     id_field = 'id'
     _fields = [
@@ -1837,6 +2063,10 @@ class BaseRRNS(n.Netdot):
 
 
 class BaseRRPTR(n.Netdot):
+    '''
+    A PTR record is the reverse of an A record. That is, it maps an IP address
+    to a hostname, rather than vice versa.
+    '''
     resource = 'RRPTR/'
     id_field = 'id'
     _fields = [
@@ -1854,6 +2084,9 @@ class BaseRRPTR(n.Netdot):
 
 
 class BaseRRSRV(n.Netdot):
+    '''
+    DNS SRV Record (RFC 2782)
+    '''
     resource = 'RRSRV/'
     id_field = 'id'
     _fields = [
@@ -1873,6 +2106,10 @@ class BaseRRSRV(n.Netdot):
 
 
 class BaseRRTXT(n.Netdot):
+    '''
+    DNS TXT records are used to hold descriptive text.  The semantics of the
+    text depends on the domain where it is found.
+    '''
     resource = 'RRTXT/'
     id_field = 'id'
     _fields = [
@@ -1889,6 +2126,9 @@ class BaseRRTXT(n.Netdot):
 
 
 class BaseService(n.Netdot):
+    '''
+    An Internet service
+    '''
     resource = 'Service/'
     id_field = 'id'
     _fields = [
@@ -1909,6 +2149,9 @@ class BaseService(n.Netdot):
 
 
 class BaseSite(n.Netdot):
+    '''
+    A physical location such as a building or data center.
+    '''
     resource = 'Site/'
     id_field = 'id'
     _fields = [
@@ -1971,6 +2214,9 @@ class BaseSite(n.Netdot):
 
 
 class BaseSiteLink(n.Netdot):
+    '''
+    A Link between two Sites.  A Site Link can consist of one or more circuits
+    '''
     resource = 'SiteLink/'
     id_field = 'id'
     _fields = [
@@ -1994,6 +2240,9 @@ class BaseSiteLink(n.Netdot):
 
 
 class BaseSiteSubnet(n.Netdot):
+    '''
+    Site to Subnet join table
+    '''
     resource = 'SiteSubnet/'
     id_field = 'id'
     _fields = [
@@ -2009,6 +2258,9 @@ class BaseSiteSubnet(n.Netdot):
 
 
 class BaseSplice(n.Netdot):
+    '''
+    Cable Splices
+    '''
     resource = 'Splice/'
     id_field = 'id'
     _fields = [
@@ -2025,6 +2277,9 @@ class BaseSplice(n.Netdot):
 
 
 class BaseSTPInstance(n.Netdot):
+    '''
+    Spanning Tree Protocol Instance
+    '''
     resource = 'STPInstance/'
     id_field = 'id'
     _fields = [
@@ -2048,6 +2303,9 @@ class BaseSTPInstance(n.Netdot):
 
 
 class BaseStrandStatus(n.Netdot):
+    '''
+    Cable strand/pair status
+    '''
     resource = 'StrandStatus/'
     id_field = 'id'
     _fields = [
@@ -2068,6 +2326,9 @@ class BaseStrandStatus(n.Netdot):
 
 
 class BaseSubnetZone(n.Netdot):
+    '''
+    IP Subnet to DNS Zone join table
+    '''
     resource = 'SubnetZone/'
     id_field = 'id'
     _fields = [
@@ -2083,6 +2344,9 @@ class BaseSubnetZone(n.Netdot):
 
 
 class BaseVlan(n.Netdot):
+    '''
+    A Virtual LAN
+    '''
     resource = 'Vlan/'
     id_field = 'id'
     _fields = [
@@ -2111,6 +2375,9 @@ class BaseVlan(n.Netdot):
 
 
 class BaseVlanGroup(n.Netdot):
+    '''
+    A Virtual LAN Group
+    '''
     resource = 'VlanGroup/'
     id_field = 'id'
     _fields = [
@@ -2134,6 +2401,9 @@ class BaseVlanGroup(n.Netdot):
 
 
 class BaseZone(n.Netdot):
+    '''
+    A DNS Zone
+    '''
     resource = 'Zone/'
     id_field = 'id'
     _fields = [
@@ -2176,6 +2446,9 @@ class BaseZone(n.Netdot):
 
 
 class BaseZoneAlias(n.Netdot):
+    '''
+    An alias of an existing zone
+    '''
     resource = 'ZoneAlias/'
     id_field = 'id'
     _fields = [

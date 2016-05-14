@@ -122,6 +122,7 @@ for r in resources:
     resp = api.get('%s/meta_data' % r)
     xml = ET.fromstring(resp.text)
     model = {}
+    model['description'] = xml.attrib['description']
     model['resource'] = xml.attrib['name']
     model['class_name'] = model['resource']
     model['id_field'] = xml.attrib['primary_key']

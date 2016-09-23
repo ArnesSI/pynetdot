@@ -51,7 +51,7 @@ class Netdot(object):
             return []
         if not response.ok:
             response.raise_for_status()
-        xml = parse_xml(response.text)
+        xml = parse_xml(response.content)
         results = []
         for c in xml:
             obj = cls(id=c.attrib['id'])
@@ -88,7 +88,7 @@ class Netdot(object):
         self._from_response(response)
 
     def _from_response(self, response):
-        xml = parse_xml(response.text)
+        xml = parse_xml(response.content)
         # returns a single tag: <opt id="...
         attrs = xml.attrib
         self._from_netdot(self, attrs)
@@ -233,4 +233,4 @@ class Netdot(object):
         if not self.id:
             return '%s.%s()' % (self.__class__.__module__, self.__class__.__name__)
         else:
-            return '%s.%s("%s")' % (self.__class__.__module__, self.__class__.__name__, self.label)
+            return '%s.%s("%s")' % (self.__class__.__module__, self.__class__.__name__, self.label.encode('utf-8', 'replace'))

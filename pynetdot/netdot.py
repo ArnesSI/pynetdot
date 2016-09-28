@@ -1,3 +1,4 @@
+import os
 import logging
 from serializer import parse_xml
 from api import NetdotAPI
@@ -8,6 +9,27 @@ api = None
 def setup(url='http://localhost/netdot/', username='admin', password='password'):
     global api
     api = NetdotAPI(url=url, username=username, password=password)
+
+def load_settings():
+    defaults = {
+        'username': 'user',
+        'password': 'password',
+        'url': 'http://localhost/netdot',
+    }
+    default_path = os.path.join(os.path.expanduser('~'), '.pynetdot.yaml')
+    settings_path = os.environ.get('PYNETDOT_SETTINGS', default_path)
+    try:
+        import yaml
+        with open(settings_path) as fh:
+            settings_load = yaml.safe_load(fh)
+    except Exception as e:
+        logger.error('Error loading config file. Using defaults. [%s]' % e)
+        settings = defaults
+    else:
+        settings = {}
+        for key, default in defaults.items():
+            settings[key] = settings_load.get(key, default)
+    return settings
 
 
 class Netdot(object):

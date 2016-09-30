@@ -1,7 +1,7 @@
 import os
 import logging
-from serializer import parse_xml
-from api import NetdotAPI
+from .serializer import parse_xml
+from .api import NetdotAPI
 
 logger = logging.getLogger(__name__)
 api = None

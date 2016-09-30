@@ -1,12 +1,13 @@
 import requests
 import logging
+from .version import VERSION
 
 logger = logging.getLogger(__name__)
 
 
 class NetdotAPI(object):
     HEADERS = {
-        'User_Agent':'python_confgen',
+        'User-Agent':'pynetdot-%s' % VERSION,
         'Accept':'text/xml; version=1.0',
     }
 

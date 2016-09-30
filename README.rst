@@ -39,6 +39,22 @@ This file will be read when you import pynetdot module.
 
 You'll need the PyYAML module installed.
 
+************
+Installation
+************
+
+pynetdot can be installed as any other python module.
+
+Via pip::
+
+ pip install pynetdot
+
+Install manually::
+
+ python setup.py install
+
+Pip is preferred.
+
 *****
 Usage
 *****

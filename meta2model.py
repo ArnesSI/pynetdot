@@ -91,7 +91,7 @@ resources = [
     'splice',
     'strandstatus',
     'subnetzone',
-    #'usertype',
+    'usertype',
     #'userright',
     'vlan',
     'vlangroup',

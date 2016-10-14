@@ -2343,6 +2343,29 @@ class BaseSubnetZone(n.Netdot):
         return l.strip()
 
 
+class BaseUserType(n.Netdot):
+    '''
+    Types of Netdot users
+    '''
+    resource = 'UserType/'
+    id_field = 'id'
+    _fields = [
+        f.StringField('info', display_name='Comments'),
+        f.StringField('name', display_name='Name'),
+    ]
+    _views = {'all': ['name', 'info'], 'brief': ['name']}
+
+    @property
+    def label(self):
+        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        return l.strip()
+
+    @property
+    def people(self):
+        cls = getattr(pynetdot.models, 'Person')
+        return cls.search(user_type=self.id)
+
+
 class BaseVlan(n.Netdot):
     '''
     A Virtual LAN

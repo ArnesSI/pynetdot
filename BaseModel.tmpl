@@ -2,9 +2,9 @@
 {% set model_name = model_item[0] %}
 {% set model = model_item[1] %}
 class Base{{ model.class_name }}(n.Netdot):
-    '''
+    """
     {{ model.description|wordwrap(74,False,'\n    ') }}
-    '''
+    """
     resource = '{{ model.resource }}/'
     id_field = '{{ model.id_field }}'
     _fields = [

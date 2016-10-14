@@ -117,9 +117,7 @@ class Netdot(object):
 
     @classmethod
     def _from_netdot(cls, obj, attrs):
-        '''
-        Create instance fields from netdot's XML response.
-        '''
+        """Create instance fields from netdot's XML response."""
         if not isinstance(obj, cls):
             raise Exception('Passed object is not an instance of this class')
         obj._attrs = attrs
@@ -136,9 +134,7 @@ class Netdot(object):
         return values
 
     def get_dirty_fields(self):
-        '''
-        Return a list of fields that have been modified.
-        '''
+        """Return a list of fields that have been modified."""
         new_state = self._as_dict()
         changed_fields = dict([
             (key, value)
@@ -148,17 +144,15 @@ class Netdot(object):
         return changed_fields.keys()
 
     def is_dirty(self):
-        '''
-        Returns True if object was modified.
-        '''
+        """Returns True if object was modified."""
         if not self.id:
             return True
         return bool(self.get_dirty_fields())
 
     def display(self, view='all'):
-        '''
+        """
         Returns a string displaying the object attributes for the given view.
-        '''
+        """
         ds = u'%s:\n' % self.label
         if view=='all' and not self._views.get(view):
             for f in self._fields:
@@ -173,9 +167,7 @@ class Netdot(object):
         return ds
 
     def dump(self):
-        '''
-        Returns a string displaying all attribures of the object.
-        '''
+        """Returns a string displaying all attribures of the object."""
         return self.display('all')
 
     def save(self):
@@ -214,9 +206,7 @@ class Netdot(object):
         return True
 
     def delete(self):
-        """
-        Delete object from netdot database.
-        """
+        """Delete object from netdot database."""
         if not self.id:
             # no id means this object was not created in netdot yet
             return True

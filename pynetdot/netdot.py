@@ -6,9 +6,9 @@ from .api import NetdotAPI
 logger = logging.getLogger(__name__)
 api = None
 
-def setup(url='http://localhost/netdot/', username='admin', password='password'):
-    global api
-    api = NetdotAPI(url=url, username=username, password=password)
+def setup(url='http://localhost/netdot/', username='admin', password='password', verify=True):
+	global api
+	api = NetdotAPI(url=url, username=username, password=password, verify=verify)
 
 def load_settings():
     defaults = {

@@ -11,33 +11,34 @@ class NetdotAPI(object):
         'Accept':'text/xml; version=1.0',
     }
 
-    def __init__(self, url='http://localhost/netdot/', username='admin', password='password'):
+    def __init__(self, url='http://localhost/netdot/', username='admin', password='password', verify=True):
         if not url.endswith('/'):
             url = '%s/' % url
         self.url = url
         self.username = username
         self.password = password
+        self.verify = verify
         self._cookies = None
 
     def get(self, resource, **kwargs):
         url = self.url + 'rest/' + resource
-        response = requests.get(url, cookies=self._get_cookies(), headers=self.HEADERS, **kwargs)
+        response = requests.get(url, cookies=self._get_cookies(), headers=self.HEADERS, verify=self.verify, **kwargs)
         if response.status_code == 403:
-            response = requests.get(url, cookies=self._get_cookies(clear_cache=True), headers=self.HEADERS, **kwargs)
+            response = requests.get(url, cookies=self._get_cookies(clear_cache=True), headers=self.HEADERS, verify=self.verify, **kwargs)
         return response
 
     def post(self, resource, params, **kwargs):
         url = self.url + 'rest/' + resource
-        response = requests.post(url, cookies=self._get_cookies(), headers=self.HEADERS, params=params, **kwargs)
+        response = requests.post(url, cookies=self._get_cookies(), headers=self.HEADERS, params=params, verify=self.verify, **kwargs)
         if response.status_code == 403:
-            response = requests.post(url, cookies=self._get_cookies(clear_cache=True), headers=self.HEADERS, params=params, **kwargs)
+            response = requests.post(url, cookies=self._get_cookies(clear_cache=True), headers=self.HEADERS, params=params, verify=self.verify, **kwargs)
         return response
 
     def delete(self, resource, **kwargs):
         url = self.url + 'rest/' + resource
-        response = requests.delete(url, cookies=self._get_cookies(), headers=self.HEADERS, **kwargs)
+        response = requests.delete(url, cookies=self._get_cookies(), headers=self.HEADERS, verify=self.verify, **kwargs)
         if response.status_code == 403:
-            response = requests.delete(url, cookies=self._get_cookies(clear_cache=True), headers=self.HEADERS, **kwargs)
+            response = requests.delete(url, cookies=self._get_cookies(clear_cache=True), headers=self.HEADERS, verify=self.verify, **kwargs)
         return response
 
     def _get_cookies(self, clear_cache=False):
@@ -61,7 +62,7 @@ class NetdotAPI(object):
             'credential_1':password,
             'permanent_session':1,
         }
-        response = requests.post(login_url, data=params, headers=self.HEADERS, allow_redirects=False)
+        response = requests.post(login_url, data=params, headers=self.HEADERS, allow_redirects=False, verify=self.verify)
         if response.ok:
             logger.info('Logged into netdot with username %s' % username)
             return response.cookies

@@ -4,6 +4,14 @@
 class Base{{ model.class_name }}(n.Netdot):
     """
     {{ model.description|wordwrap(74,False,'\n    ') }}
+
+    Attributes:
+{% for f in model.fields %}
+        {{ f.name }}: {{ f.description }}
+{% endfor %}
+{% for link in reverse_links.get(model_name, []) %}
+        {{ link.method }}: List of {{ link.target }} objects
+{% endfor %}
     """
     resource = '{{ model.resource }}/'
     id_field = '{{ model.id_field }}'

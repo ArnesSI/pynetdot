@@ -134,6 +134,7 @@ for r in resources:
         f_args = ''
         f_name = c.attrib['id']
         f_reverse = ''
+        f_description = c.attrib['description']
         c_type = c.attrib.get('type', '')
         c_tag = c.attrib.get('tag', f_name)
         f_args += ', display_name=\'%s\'' % c_tag
@@ -161,7 +162,7 @@ for r in resources:
         if not f_class:
             warn('Usupported column type: %s %s %s' % (class_name, f_name, c_type))
             continue
-        fields.append({'class':f_class, 'name':f_name, 'args':f_args})
+        fields.append({'class':f_class, 'name':f_name, 'args':f_args, 'description':f_description})
     model['fields'] = fields
 
     # label tag

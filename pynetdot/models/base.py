@@ -5,6 +5,11 @@ import pynetdot.models
 class BaseArpCache(n.Netdot):
     """
     Device ARP Cache
+
+    Attributes:
+        device: Device where this Arp Cache was found
+        tstamp: When this Cache was collected
+        entries: List of ArpCacheEntry objects
     """
     resource = 'ArpCache/'
     id_field = 'id'
@@ -28,6 +33,12 @@ class BaseArpCache(n.Netdot):
 class BaseArpCacheEntry(n.Netdot):
     """
     ARP Cache Entry
+
+    Attributes:
+        arpcache: ARP Cache where this entry belongs
+        interface: Interface
+        ipaddr: IP address
+        physaddr: Physical Address (MAC)
     """
     resource = 'ArpCacheEntry/'
     id_field = 'id'
@@ -48,6 +59,14 @@ class BaseArpCacheEntry(n.Netdot):
 class BaseASN(n.Netdot):
     """
     Autonomous System Number
+
+    Attributes:
+        description: A short description of this ASN
+        info: Comments
+        number: Autonomous System (AS) Number
+        rir: Regional Internet Registry from which ASN was obtained (AFRINIC, APNIC, ARIN, LACNIC, RIPE)
+        devices: List of Device objects
+        ipblocks: List of Ipblock objects
     """
     resource = 'ASN/'
     id_field = 'id'
@@ -79,6 +98,23 @@ class BaseAsset(n.Netdot):
     """
     Assets represent network hardware (devices or modules). If an asset is
     installed, it will be associated with a device or devicemodule object.
+
+    Attributes:
+        custom_serial: Custom (human-set) serial number of this asset
+        date_purchased: The date the asset was purchased
+        description: A short description for this Asset
+        info: Comments
+        inventory_number: Asset inventory number
+        maint_contract: Reference to a maintenance or support contract with hardware vendor or third party.
+        maint_from: Device covered in maintenance from this date (YYYY-MM-DD)
+        maint_until: Device covered in maintenance until this date (YYYY-MM-DD)
+        physaddr: The base MAC address of this Asset.
+        po_number: Purchase order number
+        product_id: product key
+        reserved_for: For hardware that is not installed, specify if it is reserved and what for
+        serial_number: Asset serial number
+        devices: List of Device objects
+        device_modules: List of DeviceModule objects
     """
     resource = 'Asset/'
     id_field = 'id'
@@ -118,6 +154,16 @@ class BaseAsset(n.Netdot):
 class BaseAudit(n.Netdot):
     """
     Audit Table to record database operations made by users
+
+    Attributes:
+        fields: Fields changed
+        label: Object Label
+        object_id: Object id
+        operation: DB Operation (insert, update, delete)
+        tablename: Table affected
+        tstamp: When this change happened
+        username: User that made the change
+        vals: Values that changed
     """
     resource = 'Audit/'
     id_field = 'id'
@@ -142,6 +188,15 @@ class BaseAudit(n.Netdot):
 class BaseAvailability(n.Netdot):
     """
     A Time Period
+
+    Attributes:
+        info: Comments
+        name: Time period brief description. e.g. "24x7"
+        page_notifications: List of Contact objects
+        page_notifications: List of Contact objects
+        page_notifications: List of Contact objects
+        entities: List of Entity objects
+        sites: List of Site objects
     """
     resource = 'Availability/'
     id_field = 'id'
@@ -186,6 +241,17 @@ class BaseBackboneCable(n.Netdot):
     """
     A Backbone cable that interconnects two sites.  Backbone cables can have
     multiple strands.
+
+    Attributes:
+        end_closet: Closet where this cable terminates
+        info: Comments
+        installdate: Date when this Cable was first installed (YYYY-MM-DD)
+        length: The physical length of this cable
+        name: A name given to this cable.
+        owner: Entity that owns this cable
+        start_closet: Closet where this cable originates
+        type: The type of cable
+        strands: List of CableStrand objects
     """
     resource = 'BackboneCable/'
     id_field = 'id'
@@ -215,6 +281,21 @@ class BaseBackboneCable(n.Netdot):
 class BaseBGPPeering(n.Netdot):
     """
     A BGP Peering
+
+    Attributes:
+        authkey: The authentication key for this BGP session
+        bgppeeraddr: BGP Peer Address
+        bgppeerid: BGP Peer ID
+        contactlist: Who to contact about this peering session. Also used for Nagios alarms.
+        device: Device where BGP peering exists (the local device, that is)
+        entity: Entity with which Peering Exists
+        info: Comments
+        last_changed: Time when the state last changed
+        max_v4_prefixes: Maximum number of IPv4 prefixes we will permit from this peer
+        max_v6_prefixes: Maximum number of IPv6 prefixes we will permit from this peer
+        monitored: Flag that specifies if this peering should be monitored
+        peer_group: Name of the peer group
+        state: Peering state
     """
     resource = 'BGPPeering/'
     id_field = 'id'
@@ -244,6 +325,18 @@ class BaseBGPPeering(n.Netdot):
 class BaseCableStrand(n.Netdot):
     """
     A single cable strand/pair
+
+    Attributes:
+        cable: Cable to which this strand belongs
+        circuit_id: ID of the circuit which this strand is a part of
+        description: A text description of this strand
+        fiber_type: The type of fiber that this strand is made of
+        info: Comments
+        name: A name for this strand
+        number: The numeric order of this strand
+        status: Status of this strand
+        splices: List of Splice objects
+        splices2: List of Splice objects
     """
     resource = 'CableStrand/'
     id_field = 'id'
@@ -278,6 +371,12 @@ class BaseCableStrand(n.Netdot):
 class BaseCableType(n.Netdot):
     """
     Types of Cables
+
+    Attributes:
+        info: Comments
+        name: The name of this cable type
+        backbonecables: List of BackboneCable objects
+        horizontalcables: List of HorizontalCable objects
     """
     resource = 'CableType/'
     id_field = 'id'
@@ -308,6 +407,20 @@ class BaseCircuit(n.Netdot):
     A circuit can either be a WAN link provided by an external entity, or a
     set of [spliced] backbone cable strands terminated into two device
     interfaces
+
+    Attributes:
+        cid: ID of this circuit.
+        datetested: Date that this circuit was last tested (YYYY-MM-DD)
+        info: Comments
+        installdate: Date when this circuit was installed (YYYY-MM-DD)
+        linkid: Site Link to which this circuit belongs
+        loss: Tested loss (dbm)
+        speed: The speed of this circuit (Mbps)
+        status: Status of this circuit
+        type: The type of this circuit
+        vendor: Who provides this circuit, if it is not internal
+        strands: List of CableStrand objects
+        interfaces: List of Interface objects
     """
     resource = 'Circuit/'
     id_field = 'id'
@@ -344,6 +457,11 @@ class BaseCircuit(n.Netdot):
 class BaseCircuitStatus(n.Netdot):
     """
     Circuit status
+
+    Attributes:
+        info: Comments
+        name: Circuit Status
+        circuits: List of Circuit objects
     """
     resource = 'CircuitStatus/'
     id_field = 'id'
@@ -367,6 +485,11 @@ class BaseCircuitStatus(n.Netdot):
 class BaseCircuitType(n.Netdot):
     """
     Circuit Type
+
+    Attributes:
+        info: Comments
+        name: Circuit Type
+        circuits: List of Circuit objects
     """
     resource = 'CircuitType/'
     id_field = 'id'
@@ -392,6 +515,31 @@ class BaseCloset(n.Netdot):
     A Communications Closet.  A Closet is different from a normal Room in two
     ways: a) Backbone Cables (inter and intra building) terminate in Closets.
     b) Horizontal Cables _start_ in Closets and _end_ in Rooms
+
+    Attributes:
+        access_key_type: 
+        asbestos_tiles: 
+        catv_taps: 
+        converted_patch_panels: 
+        dimensions: 
+        ground_buss: 
+        hvac_type: 
+        info: 
+        name: An identifier for this Closet within a Site
+        ot_blocks: 
+        outlets: 
+        pair_count: 
+        patch_panels: 
+        rack_type: 
+        racks: 
+        room: The Room number where the closet is located
+        ru_avail: 
+        shared_with: 
+        ss_blocks: 
+        work_needed: 
+        backbones_end: List of BackboneCable objects
+        backbones_start: List of BackboneCable objects
+        horizontalcables: List of HorizontalCable objects
     """
     resource = 'Closet/'
     id_field = 'id'
@@ -446,6 +594,16 @@ class BaseContact(n.Netdot):
     associated with one or more resources (devices, services, etc) for which
     they could be contacted.  Each Contact object represents one of these
     roles.
+
+    Attributes:
+        contactlist: The list or group of Contacts to which this Contact belongs
+        contacttype: The type of this Contact
+        escalation_level: This level defines when this contact will be notified when monitoring devices or services.  Notifications usually escalate to a different set of contacts when the problem is not resolved in a certain amount of time.  This logic is implemented by the chosen external monitoring tool, not Netdot.
+        info: Comments
+        notify_email: Set this field to the desired Time Period to receive e-mail notifications when monitoring devices or services
+        notify_pager: Set this field to the desired Time Period to receive pager notifications when monitoring devices or services
+        notify_voice: Set this field to the desired Time Period to receive voice notifications when monitoring devices or services
+        person: The actual Person that this contact refers to.  The Person table holds the actual contact information
     """
     resource = 'Contact/'
     id_field = 'id'
@@ -470,6 +628,20 @@ class BaseContact(n.Netdot):
 class BaseContactList(n.Netdot):
     """
     A list of contacts
+
+    Attributes:
+        info: Comments
+        name: Name for this group
+        peerings: List of BGPPeering objects
+        contacts: List of Contact objects
+        devices: List of DeviceContacts objects
+        entities: List of Entity objects
+        access_rights: List of GroupRight objects
+        outlets: List of HorizontalCable objects
+        interfaces: List of Interface objects
+        services: List of IpService objects
+        sites: List of Site objects
+        zones: List of Zone objects
     """
     resource = 'ContactList/'
     id_field = 'id'
@@ -538,6 +710,11 @@ class BaseContactList(n.Netdot):
 class BaseContactType(n.Netdot):
     """
     Type of contact
+
+    Attributes:
+        info: Comments
+        name: The name for this Contact Type
+        contacts: List of Contact objects
     """
     resource = 'ContactType/'
     id_field = 'id'
@@ -564,6 +741,79 @@ class BaseDevice(n.Netdot):
     infrastructure devices that network administrators care about for
     inventory, monitoring and management purposes.  Not to be confused with
     end nodes
+
+    Attributes:
+        aliases: Other names by which this Device is known
+        asset_id: asset fk
+        auto_dns: Whether a DNS name should be auto generated for each IP address in this device
+        bgpid: Border Gateway Protocol ID.  This usually has the form of an IP address
+        bgplocalas: Border Gateway Protocol Local Autonomous System number
+        canautoupdate: If SNMP updates are automated, this value determines whether this Device should be included
+        collect_arp: Whether Netdot should collect ARP cache data from this Device.  Notice that this is mostly intended for Routers, though not necessarily
+        collect_fwt: Whether Netdot should collect bridge Forwarding Table (FWT) data from this Device
+        collect_stp: Enable or Disable querying device for Spanning Tree information
+        community: SNMP community
+        customer_managed: Does the operation of this Device fall into the responsibility of the customer (or "user" Entity)?
+        date_installed: Date that this Device was installed, or first seen in the network
+        down_from: Device in down time from this date (YYYY-MM-DD)
+        down_until: Device in down time until this date (YYYY-MM-DD)
+        extension: IP phone extension
+        host_device: Another device which this one is part of, such as a virtual machine host. Host device will be used as parent device in monitoring exports.
+        info: Comments
+        ipforwarding: Whether this device has IP forwarding enabled (IP-MIB::ipForwarding.0)
+        last_arp: Last time ARP cache data was collected from this Device
+        last_fwt: Last time Forwarding Tables (FWT) were collected from this Device
+        last_updated: Date that this Device was last updated
+        layers: Each digit represents a layer of the OSI model served by the device
+        monitor_config: Indicates whether this Device should be included in configuration management tools (i.e. RANCID)
+        monitor_config_group: Configuration Management group (i.e. RANCID group)
+        monitored: Determines if this Device should be included in the configurations for monitoring software
+        monitoring_path_cost: Netdot uses a variant of the Dijkstra algorithm to determine monitoring dependencies. Results can be affected adversely, for instance, by passive devices with connections that are not actually passing traffic.  This value allows the administrator to set a higher cost for those devices, for the purpose of influencing the determination of monitoring paths.
+        monitoring_template: A template that defines common monitoring parameters for a group of devices. (E.g. a Nagios template to inherit from)
+        monitorstatus: The monitoring status of this Device.  This values is supposed to be fed back into Netdot by an external process
+        name: The Device name is a reference to a DNS Resource Record (RR)
+        oobname: A name or command used to connect to this Device via an Out of Band connection, such as a Console Server
+        oobname_2: A name or command used to connect to this Device via an Out of Band connection, such as a Console Server
+        oobnumber: A phone number used to connect to this Device via an Out of Band modem
+        oobnumber_2: A phone number used to connect to this Device via an Out of Band modem
+        os: Operating System name and version
+        owner: Entity that owns this Device
+        power_outlet: ID of the power outlet in a power distribution unit or similar
+        power_outlet_2: ID of the power outlet in a power distribution unit or similar
+        rack: Rack ID where this Device is physically installed
+        room: Room where this Device is installed
+        site: Site or Building where this Device is located.  This is set manually.
+        snmp_authkey: SNMPv3 Authentication Key
+        snmp_authprotocol: SNMPv3 Authentication Protocol (MD5|SHA)
+        snmp_bulk: Enable or Disable SNMP BULK operations for this device
+        snmp_conn_attempts: How many times Netdot has attempted, and failed, to contact this device via SNMP
+        snmp_down: Whether Netdot has tried more than MAX_SNMP_CONNECTION_ATTEMPTS times to update this device via SNMP
+        snmp_managed: Enable or Disable SNMP operations on this device
+        snmp_polling: Enable or Disable SNMP polling from management tools which get their configurations from Netdot
+        snmp_privkey: SNMPv3 Privacy Key
+        snmp_privprotocol: SNMPv3 Privacy Protocol (AES|DES)
+        snmp_securitylevel: SNMPv3 Security Level (noAuthNoPriv|authNoPriv|authPriv)
+        snmp_securityname: SNMPv3 user name
+        snmp_target: SNMP target IP address.  Netdot will try to always use this IP address when snmp-querying the device
+        snmp_version: Simple Network Management Protocol Version (1|2|3)
+        stp_enabled: Whether some version of the Spanning Tree Protocol is enabled on this switch
+        stp_mst_digest: Multiple Spanning Tree (MST) Configuration Digest
+        stp_mst_region: Multiple Spanning Tree (MST) region name
+        stp_mst_rev: Multiple Spanning Tree (MST) revision
+        stp_type: Spanning Tree Protocol Type (802.1d, MST, PVST, etc)
+        sysdescription: System Description.  Meanto be populated by SNMP
+        syslocation: System Location.  Meant to be populated by SNMP.
+        sysname: System Name.  Meant to be populated by SNMP.
+        used_by: Entity that uses this Device
+        arp_caches: List of ArpCache objects
+        bgppeers: List of BGPPeering objects
+        hosted_devices: List of Device objects
+        attributes: List of DeviceAttr objects
+        modules: List of DeviceModule objects
+        contacts: List of DeviceContacts objects
+        forwarding_tables: List of FWTable objects
+        interfaces: List of Interface objects
+        stp_instances: List of STPInstance objects
     """
     resource = 'Device/'
     id_field = 'id'
@@ -687,6 +937,11 @@ class BaseDevice(n.Netdot):
 class BaseDeviceAttr(n.Netdot):
     """
     A Device Attribute
+
+    Attributes:
+        device: Device to which this attribute is assigned
+        name: Name of this attribute
+        value: Value for this attribute
     """
     resource = 'DeviceAttr/'
     id_field = 'id'
@@ -706,6 +961,11 @@ class BaseDeviceAttr(n.Netdot):
 class BaseDeviceAttrName(n.Netdot):
     """
     A Device Attributes Name
+
+    Attributes:
+        info: 
+        name: 
+        attributes: List of DeviceAttr objects
     """
     resource = 'DeviceAttrName/'
     id_field = 'id'
@@ -729,6 +989,10 @@ class BaseDeviceAttrName(n.Netdot):
 class BaseDeviceContacts(n.Netdot):
     """
     Device to Contactlist join table
+
+    Attributes:
+        contactlist: 
+        device: 
     """
     resource = 'DeviceContacts/'
     id_field = 'id'
@@ -747,6 +1011,24 @@ class BaseDeviceContacts(n.Netdot):
 class BaseDeviceModule(n.Netdot):
     """
     A Device Physical Entity
+
+    Attributes:
+        asset_id: asset fk
+        class: Module Class
+        contained_in: The number for the physical entity which "contains" this physical entity
+        date_installed: Date when this module was installed/discovered
+        description: A textual description of physical entity
+        device: Device where this Module belongs
+        fru: Whether or not this physical entity is considered a "Field Replaceable Unit" by the vendor.
+        fw_rev: The vendor-specific firmware revision string for the physical entity
+        hw_rev: The vendor-specific hardware revision string for the physical entity
+        last_updated: Date when this module was installed/discovered
+        model: The vendor-specific model name identifier string associated with this physical component
+        name: The textual name of the physical entity
+        number: Module index number
+        pos: An indication of the relative position of this child component among all its sibling components
+        sw_rev: The vendor-specific software revision string for the physical entity
+        type: An indication of the vendor-specific hardware type of the physical entity
     """
     resource = 'DeviceModule/'
     id_field = 'id'
@@ -779,6 +1061,11 @@ class BaseDeviceModule(n.Netdot):
 class BaseDhcpAttr(n.Netdot):
     """
     A DHCP Attribute or Parameter
+
+    Attributes:
+        name: Name of this attribute
+        scope: DHCP scope where this attribute will be applied
+        value: Value for this attribute
     """
     resource = 'DhcpAttr/'
     id_field = 'id'
@@ -798,6 +1085,13 @@ class BaseDhcpAttr(n.Netdot):
 class BaseDhcpAttrName(n.Netdot):
     """
     A DHCP Attributes Name
+
+    Attributes:
+        code: 
+        format: 
+        info: 
+        name: 
+        attributes: List of DhcpAttr objects
     """
     resource = 'DhcpAttrName/'
     id_field = 'id'
@@ -823,6 +1117,24 @@ class BaseDhcpAttrName(n.Netdot):
 class BaseDhcpScope(n.Netdot):
     """
     A DHCP Scope
+
+    Attributes:
+        active: Should this scope be included in the DHCP files generated by Netdot?
+        container: Reference to the container (parent) scope in the hierarchy.  Global scopes are at the top.
+        duid: DHCP Unique Identifier. Only applies to host scopes. See RFC 3315
+        enable_failover: Enable Failover for this Subnet scope or by default for all Subnet scopes within this Global scope.
+        export_file: Path and file name to export config to.
+        failover_peer: Name of failover peer to assign to pools by default.  Valid in Subnet and Global scopes.  Subnet scope value takes precedence.
+        ipblock: Reference to an IPblock object.  This only applies to host and subnet scopes.
+        name: Name of the Scope.  For example, a host name is the name of a scope of type "host".
+        physaddr: Reference to a MAC object.  Only useful within host scopes.
+        text: The contents of this field will be included in the configuration file.
+        type: Type of this scope.
+        version: IP version (4 or 6). Only applies to global scopes
+        attributes: List of DhcpAttr objects
+        contained_scopes: List of DhcpScope objects
+        templates: List of DhcpScopeUse objects
+        derived_scopes: List of DhcpScopeUse objects
     """
     resource = 'DhcpScope/'
     id_field = 'id'
@@ -871,6 +1183,11 @@ class BaseDhcpScope(n.Netdot):
 class BaseDhcpScopeType(n.Netdot):
     """
     A DHCP Scope Type
+
+    Attributes:
+        info: 
+        name: The name of this Scope type.
+        scopes: List of DhcpScope objects
     """
     resource = 'DhcpScopeType/'
     id_field = 'id'
@@ -894,6 +1211,10 @@ class BaseDhcpScopeType(n.Netdot):
 class BaseDhcpScopeUse(n.Netdot):
     """
     Relationship between a scopes and scope templates
+
+    Attributes:
+        scope: DHCP scope where template will be used
+        template: DHCP template scope
     """
     resource = 'DhcpScopeUse/'
     id_field = 'id'
@@ -912,6 +1233,33 @@ class BaseDhcpScopeUse(n.Netdot):
 class BaseEntity(n.Netdot):
     """
     An organization related to the network in some way
+
+    Attributes:
+        acctnumber: 
+        aliases: Other names by which this Entity is known
+        asname: The Autonomous System Name of this Peer Entity
+        asnumber: The Autonomous System Number of this Peer Entity
+        availability: Time Period at which this Entity is available
+        config_type: Device type to use when monitoring configuration with tools such as RANCID
+        contactlist: 
+        info: Comments
+        maint_contract: 
+        name: Name of this Entity
+        oid: The Enterprise Object ID is a unique value assigned to an Entity to use in their SNMP agents
+        short_name: A short name for this Entity
+        bgppeers: List of BGPPeering objects
+        cables: List of BackboneCable objects
+        circuits: List of Circuit objects
+        links: List of SiteLink objects
+        owned_devices: List of Device objects
+        used_devices: List of Device objects
+        roles: List of EntityRole objects
+        sites: List of EntitySite objects
+        owned_blocks: List of Ipblock objects
+        used_blocks: List of Ipblock objects
+        maintenance_contracts: List of MaintContract objects
+        employees: List of Person objects
+        products: List of Product objects
     """
     resource = 'Entity/'
     id_field = 'id'
@@ -1006,6 +1354,10 @@ class BaseEntityRole(n.Netdot):
     """
     An Entity might play different roles.  For example, the same Entity can be
     both a Customer and a Peer.
+
+    Attributes:
+        entity: The Entity that performs this role.
+        type: A type of Entity.
     """
     resource = 'EntityRole/'
     id_field = 'id'
@@ -1024,6 +1376,10 @@ class BaseEntityRole(n.Netdot):
 class BaseEntitySite(n.Netdot):
     """
     Entity to Site join table
+
+    Attributes:
+        entity: 
+        site: 
     """
     resource = 'EntitySite/'
     id_field = 'id'
@@ -1042,6 +1398,11 @@ class BaseEntitySite(n.Netdot):
 class BaseEntityType(n.Netdot):
     """
     Types of Entities
+
+    Attributes:
+        info: 
+        name: 
+        roles: List of EntityRole objects
     """
     resource = 'EntityType/'
     id_field = 'id'
@@ -1065,6 +1426,11 @@ class BaseEntityType(n.Netdot):
 class BaseFiberType(n.Netdot):
     """
     Types of Fiber
+
+    Attributes:
+        info: 
+        name: A name for this Fiber Type
+        strands: List of CableStrand objects
     """
     resource = 'FiberType/'
     id_field = 'id'
@@ -1088,6 +1454,12 @@ class BaseFiberType(n.Netdot):
 class BaseFloor(n.Netdot):
     """
     Floor Table
+
+    Attributes:
+        info: 
+        level: 
+        site: 
+        rooms: List of Room objects
     """
     resource = 'Floor/'
     id_field = 'id'
@@ -1114,6 +1486,11 @@ class BaseFWTable(n.Netdot):
     Bridge Forwarding Table.  One of these is created every time a Device is
     queried.  Entries in these tables contain physical addresses and the ports
     where they have been seen.
+
+    Attributes:
+        device: 
+        tstamp: 
+        entries: List of FWTableEntry objects
     """
     resource = 'FWTable/'
     id_field = 'id'
@@ -1137,6 +1514,11 @@ class BaseFWTable(n.Netdot):
 class BaseFWTableEntry(n.Netdot):
     """
     Bridge Forwarding Table entry
+
+    Attributes:
+        fwtable: 
+        interface: 
+        physaddr: 
     """
     resource = 'FWTableEntry/'
     id_field = 'id'
@@ -1156,6 +1538,10 @@ class BaseFWTableEntry(n.Netdot):
 class BaseGroupRight(n.Netdot):
     """
     Join between a ContactList and its Access Rights
+
+    Attributes:
+        accessright: 
+        contactlist: 
     """
     resource = 'GroupRight/'
     id_field = 'id'
@@ -1174,6 +1560,21 @@ class BaseGroupRight(n.Netdot):
 class BaseHorizontalCable(n.Netdot):
     """
     Horizontal Cable
+
+    Attributes:
+        account: An internal account number to which the installation of this cable should be billed to
+        closet: The communications closet where this cable originates
+        contactlist: A group of people that manages this cable
+        datetested: Date this cable was last tested (YYYY-MM-DD)
+        faceplateid: ID of the faceplate where this cable is terminated
+        info: Comments
+        installdate: Date this cable was installed (YYYY-MM-DD)
+        jackid: ID of the Jack where this cable is terminated
+        length: Length of this cable
+        room: Room where this cable terminates
+        testpassed: Cable test result (pass/fail)
+        type: Type of this cable
+        interfaces: List of Interface objects
     """
     resource = 'HorizontalCable/'
     id_field = 'id'
@@ -1207,6 +1608,12 @@ class BaseHorizontalCable(n.Netdot):
 class BaseHostAudit(n.Netdot):
     """
     DNS and DHCP changes
+
+    Attributes:
+        pending: This flag specifies whether the change is pending or it has been committed.
+        scope: Name of DHCP scope where change happened
+        tstamp: When this change happened
+        zone: Name of zone where change happened
     """
     resource = 'HostAudit/'
     id_field = 'id'
@@ -1227,6 +1634,52 @@ class BaseHostAudit(n.Netdot):
 class BaseInterface(n.Netdot):
     """
     An interface associated with a device
+
+    Attributes:
+        admin_duplex: Administrative status of the Duplex setting on this Interface
+        admin_status: Administrative status of this Interface
+        auto_dns: Whether a DNS name should be auto generated for each IP address in this interface
+        bpdu_filter_enabled: Whether BPDU filter is enabled on this port
+        bpdu_guard_enabled: Whether BPDU Guard is enabled on this port
+        circuit: 
+        contactlist: 
+        description: A short description for this Interface.
+        device: Device to which this Interface belongs to
+        dlci: Data Link Connection Identifier
+        doc_status: The documentation status of this interface.  Values: snmp => Discovered by SNMP, manual => Added manually, removed => Was SNMP but it is no longer seen.
+        down_from: Interface in down time from this date (YYYY-MM-DD)
+        down_until: Interface in down time until this date (YYYY-MM-DD)
+        dp_remote_id: Discovery Protocol Remote Device ID.
+        dp_remote_ip: Discovery Protocol Remote Device IP address.
+        dp_remote_port: Discovery Protocol Remote Device Port.
+        dp_remote_type: Discovery Protocol Remote Device Type.
+        ignore_ip: Ignore IP address information. Netdot will not insert IP addresses or subnets based on information fro this interface.
+        info: Comments
+        jack: Reference to a Jack or Cable where this Interface is connected
+        jack_char: The ID of the Jack where this Interface is connected
+        loop_guard_enabled: Whether Loop guard is enabled on this port
+        monitored: Determine whether this Interface should be included in the configuration of an external monitoring software
+        monitorstatus: The status of this Interface given by an external monitoring process
+        name: The name of this Interface
+        neighbor: Another Interface to which this one is physically connected
+        neighbor_fixed: Determines whether this link can be modified by automatic topology discovery mechanisms.
+        neighbor_missed: Number of times neighbor has not been seen by topology discovery process.  Once MAX_NEIGHBOR_MISSED_TIMES has been reached, the neighbor relationship is removed.
+        number: The number of this Interface (usually corresponds to SNMP ifIndex).  In some cases, this value can be a alphanumeric string.
+        oper_duplex: Operational Duplex setting
+        oper_status: Operational Status of this Interface
+        overwrite_descr: Determines whether the description for this Interface should be overwritten via SNMP updates
+        physaddr: MAC address of this Interface
+        room_char: Room number where this Interface is connected
+        root_guard_enabled: Whether Root guard is enabled on this port
+        snmp_managed: Determines whether this Interface should be included in the collection of SNMP statistics
+        speed: Bits Per Second (bps) speed of which this Interface is capable of
+        stp_id: The ID of this port in the Spanning Tree Protocol (dot1dStpPort)
+        type: Type of Interface
+        arp_entries: List of ArpCacheEntry objects
+        fwt_entries: List of FWTableEntry objects
+        neighbors: List of Interface objects
+        vlans: List of InterfaceVlan objects
+        ips: List of Ipblock objects
     """
     resource = 'Interface/'
     id_field = 'id'
@@ -1307,6 +1760,14 @@ class BaseInterface(n.Netdot):
 class BaseInterfaceVlan(n.Netdot):
     """
     Interface to VLAN join table
+
+    Attributes:
+        interface: 
+        stp_des_bridge: The Bridge ID of the bridge that this port considers to be the Designated Bridge for this segment (dot1dStpPortDesignatedBridge)
+        stp_des_port: The Port ID of the port on the Designated Bridge for this segment (dot1dStpPortDesignatedPort)
+        stp_instance: The Spanning Tree Protocol instance that this port belongs to, for this VLAN
+        stp_state: The current Spanning Tree State of this port (dot1dStpPortState). It can be one of: 1 - disabled, 2 - blocking, 3 - listening, 4 - learning, 5 - forwarding, 6 - broken
+        vlan: 
     """
     resource = 'InterfaceVlan/'
     id_field = 'id'
@@ -1330,6 +1791,35 @@ class BaseIpblock(n.Netdot):
     """
     An IP (v4 or v6) CIDR block, which can represent both individual addresses
     and blocks of addresses (subnets, etc).
+
+    Attributes:
+        address: IP Address.  This value is stored as an integer in the database
+        asn: Autonomous System Number where this block originates from
+        description: A short description for this IP address or block
+        first_seen: Date that this address or block was first seen
+        info: Comments
+        interface: Device interface where this address is configured
+        last_seen: Last time when this address or block was seen
+        monitored: Whether this IP address should be monitored or not
+        owner: Entity that owns this block
+        parent: Smallest IP block that contains this address or block.
+        prefix: Prefix length of this IP block
+        rir: Regional Internet Registry from which block was obtained (AFRINIC, APNIC, ARIN, LACNIC, RIPE)
+        status: Status of this IP block
+        use_network_broadcast: Whether the network and broadcast addresses in this IPv4 block should be marked as reserved or not
+        used_by: Entity that uses this block
+        version: IP version (4 or 6)
+        vlan: VLAN to which this subnet is associated
+        arp_entries: List of ArpCacheEntry objects
+        snmp_devices: List of Device objects
+        dhcp_scopes: List of DhcpScope objects
+        services: List of IpService objects
+        children: List of Ipblock objects
+        attributes: List of IpblockAttr objects
+        a_records: List of RRADDR objects
+        ptr_records: List of RRPTR objects
+        sites: List of SiteSubnet objects
+        zones: List of SubnetZone objects
     """
     resource = 'Ipblock/'
     id_field = 'id'
@@ -1413,6 +1903,11 @@ class BaseIpblock(n.Netdot):
 class BaseIpblockAttr(n.Netdot):
     """
     An Ipblock Attribute
+
+    Attributes:
+        ipblock: Ipblock to which this attribute is assigned
+        name: Name of this attribute
+        value: Value for this attribute
     """
     resource = 'IpblockAttr/'
     id_field = 'id'
@@ -1432,6 +1927,11 @@ class BaseIpblockAttr(n.Netdot):
 class BaseIpblockAttrName(n.Netdot):
     """
     An Ipblock Attributes Name
+
+    Attributes:
+        info: 
+        name: 
+        attributes: List of IpblockAttr objects
     """
     resource = 'IpblockAttrName/'
     id_field = 'id'
@@ -1455,6 +1955,10 @@ class BaseIpblockAttrName(n.Netdot):
 class BaseIpblockStatus(n.Netdot):
     """
     IP block status
+
+    Attributes:
+        name: 
+        ipblocks: List of Ipblock objects
     """
     resource = 'IpblockStatus/'
     id_field = 'id'
@@ -1477,6 +1981,13 @@ class BaseIpblockStatus(n.Netdot):
 class BaseIpService(n.Netdot):
     """
     A relationship between an IP address and a running Internet service
+
+    Attributes:
+        contactlist: 
+        ip: 
+        monitored: 
+        monitorstatus: 
+        service: 
     """
     resource = 'IpService/'
     id_field = 'id'
@@ -1498,6 +2009,12 @@ class BaseIpService(n.Netdot):
 class BaseMaintContract(n.Netdot):
     """
     Device Maintenance Contract
+
+    Attributes:
+        info: 
+        number: 
+        provider: Maintenace Contract Provider
+        assets: List of Asset objects
     """
     resource = 'MaintContract/'
     id_field = 'id'
@@ -1522,6 +2039,13 @@ class BaseMaintContract(n.Netdot):
 class BaseMonitorStatus(n.Netdot):
     """
     Status information for what is monitored
+
+    Attributes:
+        info: 
+        name: 
+        devices: List of Device objects
+        interfaces: List of Interface objects
+        ipservices: List of IpService objects
     """
     resource = 'MonitorStatus/'
     id_field = 'id'
@@ -1555,6 +2079,10 @@ class BaseMonitorStatus(n.Netdot):
 class BaseOUI(n.Netdot):
     """
     Organizationally Unique Identifier
+
+    Attributes:
+        oui: Organizationally Unique Identifier.  Assigned by the IEEE to Ethernet hardware manufacturers.
+        vendor: Manufacturer of Ethernet hardware
     """
     resource = 'OUI/'
     id_field = 'id'
@@ -1573,6 +2101,28 @@ class BaseOUI(n.Netdot):
 class BasePerson(n.Netdot):
     """
     Information about an individual
+
+    Attributes:
+        aliases: Other names by which this Person is known
+        cell: Cellular Phone number
+        email: E-mail address
+        emailpager: Email address used for paging (via a pager gateway)
+        entity: The entity that this person works for
+        extension: Work Telephone number extension
+        fax: Fax number
+        firstname: First Name
+        home: Home Telephone Number
+        info: 
+        lastname: Last Name
+        location: Site where this Person is located.  The Site is used instead of an Address
+        office: Office or Work telephone number
+        pager: Pager number
+        password: User Password.  Not necessary if this person is not a Netdot user.
+        position: Position within the organization
+        room: Room where person is located, if available
+        user_type: User type
+        username: User name.  Only necessary if this person needs access to Netdot.
+        roles: List of Contact objects
     """
     resource = 'Person/'
     id_field = 'id'
@@ -1613,6 +2163,18 @@ class BasePerson(n.Netdot):
 class BasePhysAddr(n.Netdot):
     """
     A physical or MAC address
+
+    Attributes:
+        address: A 48 bit MAC address in Hexadecimal digits (with no delimiters)
+        first_seen: Time when this address was first seen in the network
+        last_seen: Time when this address was last seen in the network
+        static: If this value is set, the address is considered permanent and should not be removed, even if it has not been seen in the network for a given amount of time
+        arp_entries: List of ArpCacheEntry objects
+        assets: List of Asset objects
+        dhcp_hosts: List of DhcpScope objects
+        fwt_entries: List of FWTableEntry objects
+        interfaces: List of Interface objects
+        attributes: List of PhysAddrAttr objects
     """
     resource = 'PhysAddr/'
     id_field = 'id'
@@ -1663,6 +2225,11 @@ class BasePhysAddr(n.Netdot):
 class BasePhysAddrAttr(n.Netdot):
     """
     Custom attributes can be assigned to physical (MAC) addresses
+
+    Attributes:
+        name: Name of this attribute
+        physaddr: Physiscal Address to which this attribute is assigned
+        value: Value for this attribute
     """
     resource = 'PhysAddrAttr/'
     id_field = 'id'
@@ -1682,6 +2249,11 @@ class BasePhysAddrAttr(n.Netdot):
 class BasePhysAddrAttrName(n.Netdot):
     """
     Custom attribute name for physical (MAC) addresses
+
+    Attributes:
+        info: 
+        name: 
+        attributes: List of PhysAddrAttr objects
     """
     resource = 'PhysAddrAttrName/'
     id_field = 'id'
@@ -1705,6 +2277,18 @@ class BasePhysAddrAttrName(n.Netdot):
 class BaseProduct(n.Netdot):
     """
     Product Names
+
+    Attributes:
+        config_type: Device type to use when monitoring configuration with tools such as RANCID
+        description: A short description for this Product
+        info: Comments
+        latest_os: Recommended OS version
+        manufacturer: Reference to an Entity which manufactures this product
+        name: Product Name
+        part_number: Manufacturers part number
+        sysobjectid: SNMP Object ID given to this product by its manufacturer
+        type: Product Type. Types of network products include routers, switches, hubs, etc.
+        assets: List of Asset objects
     """
     resource = 'Product/'
     id_field = 'id'
@@ -1735,6 +2319,11 @@ class BaseProduct(n.Netdot):
 class BaseProductType(n.Netdot):
     """
     Types of network devices
+
+    Attributes:
+        info: 
+        name: 
+        products: List of Product objects
     """
     resource = 'ProductType/'
     id_field = 'id'
@@ -1758,6 +2347,14 @@ class BaseProductType(n.Netdot):
 class BaseRoom(n.Netdot):
     """
     Room
+
+    Attributes:
+        floor: 
+        name: 
+        closets: List of Closet objects
+        devices: List of Device objects
+        jacks: List of HorizontalCable objects
+        people: List of Person objects
     """
     resource = 'Room/'
     id_field = 'id'
@@ -1797,6 +2394,28 @@ class BaseRR(n.Netdot):
     """
     DNS Resource Record. Also known as the "owner", this object in Netdot
     groups all the records with the same name.
+
+    Attributes:
+        active: Should this record be included in the Zone files generated by Netdot?
+        auto_update: Determines whether this record can be updated by an automated process.  For example, if a Device Interface changes its name and the change is picked up by an SNMP update
+        created: Time when this resource record was created
+        expiration: Expiration Date for this Record (YYYY-MM-DD)
+        info: Comments
+        modified: Last time when this resource record was modified
+        name: The identifier for this Record
+        zone: Zone or Domain to which this record belongs
+        devices: List of Device objects
+        a_records: List of RRADDR objects
+        cnames: List of RRCNAME objects
+        ds_records: List of RRDS objects
+        hinfo_records: List of RRHINFO objects
+        loc_records: List of RRLOC objects
+        mx_records: List of RRMX objects
+        naptr_records: List of RRNAPTR objects
+        ns_records: List of RRNS objects
+        ptr_records: List of RRPTR objects
+        srv_records: List of RRSRV objects
+        txt_records: List of RRTXT objects
     """
     resource = 'RR/'
     id_field = 'id'
@@ -1884,6 +2503,11 @@ class BaseRRADDR(n.Netdot):
     address.  A "AAAA" record does the same thing, but with IPv6 addresses. A
     "dual-stack" host can have both an A record and a AAAA record at the same
     time.
+
+    Attributes:
+        ipblock: 
+        rr: 
+        ttl: Record TTL
     """
     resource = 'RRADDR/'
     id_field = 'id'
@@ -1905,6 +2529,11 @@ class BaseRRCNAME(n.Netdot):
     DNS CNAME records map an alias or nickname to the real or Canonical name
     which may lie outside the current zone. Canonical means expected or real
     name.
+
+    Attributes:
+        cname: A domain-name which specifies the canonical or primary name for the owner.
+        rr: Alias Name
+        ttl: Record TTL
     """
     resource = 'RRCNAME/'
     id_field = 'id'
@@ -1926,6 +2555,14 @@ class BaseRRDS(n.Netdot):
     The DS Resource Record refers to a DNSKEY RR and is used in the DNS DNSKEY
     authentication process.  A DS RR refers to a DNSKEY RR by storing the key
     tag, algorithm number, and a digest of the DNSKEY RR.
+
+    Attributes:
+        algorithm: The Algorithm field lists the algorithm number of the DNSKEY RR referred to by the DS record. The algorithm number used by the DS RR is identical to the algorithm number used by RRSIG and DNSKEY RRs.
+        digest: Digest
+        digest_type: The DS RR refers to a DNSKEY RR by including a digest of that DNSKEY RR.  The Digest Type field identifies the algorithm used to construct the digest.
+        key_tag: The Key Tag field lists the key tag of the DNSKEY RR referred to by the DS record, in network byte order.
+        rr: 
+        ttl: Record TTL
     """
     resource = 'RRDS/'
     id_field = 'id'
@@ -1953,6 +2590,12 @@ class BaseRRHINFO(n.Netdot):
     These may also be useful just for inventory purposes.  Publishing HINFO
     records may pose a security risk, thus Netdot administrators may choose
     not to include these records when exporting zone data
+
+    Attributes:
+        cpu: Central Processing Unit
+        os: Operating System
+        rr: 
+        ttl: Record TTL
     """
     resource = 'RRHINFO/'
     id_field = 'id'
@@ -1973,6 +2616,16 @@ class BaseRRHINFO(n.Netdot):
 class BaseRRLOC(n.Netdot):
     """
     Location Information. See RFC1876
+
+    Attributes:
+        altitude: The altitude of the center of the sphere described by SIZE, in centimeters, from a base of 100,000m below the WGS 84 reference spheroid used by GPS.
+        horiz_pre: The horizontal precision of the data, in centimeters, expressed using the same representation as SIZE
+        latitude: The latitude of the center of the sphere described by SIZE, in thousandths of a second of arc. 2**31 represents the equator; numbers above that are north latitude.
+        longitude: The longitude of the center of the sphere described by SIZE, in thousandths of a second of arc. 2**31 represents the prime meridian; numbers above that are east longitude.
+        rr: 
+        size: The diameter of a sphere enclosing the described entity.
+        ttl: Record TTL
+        vert_pre: The vertical precision of the data, in centimeters, expressed using the same representation as SIZE
     """
     resource = 'RRLOC/'
     id_field = 'id'
@@ -2002,6 +2655,12 @@ class BaseRRMX(n.Netdot):
     used to prioritize mail delivery if multiple mail servers are available.
     The set of MX records of a domain name specifies how email should be
     routed with the Simple Mail Transfer Protocol.
+
+    Attributes:
+        exchange: A domain-name which specifies a host willing to act as a mail exchange for the owner name. The host name must map directly to one or more address records (A, or AAAA) in the DNS, and must not point to any CNAME records.
+        preference: A 16 bit integer which specifies the preference given to this RR among others at the same owner.  Lower values are preferred.
+        rr: 
+        ttl: Record TTL
     """
     resource = 'RRMX/'
     id_field = 'id'
@@ -2022,6 +2681,16 @@ class BaseRRMX(n.Netdot):
 class BaseRRNAPTR(n.Netdot):
     """
     Naming Authority Pointer (NAPTR) Resource Record (RFC3403)
+
+    Attributes:
+        flags: A <character-string> containing flags to control aspects of the rewriting and interpretation of the fields in the record.  Flags are single characters from the set A-Z and 0-9.  The case of the alphabetic characters is not significant.  The field can be empty.
+        order_field: A 16-bit unsigned integer specifying the order in which the NAPTR records MUST be processed in order to accurately represent the ordered list of Rules.  The ordering is from lowest to highest.
+        preference: A 16-bit unsigned integer that specifies the order in which NAPTR records with equal Order values SHOULD be processed, low numbers being processed before high numbers
+        regexpr: A <character-string> containing a substitution expression that is applied to the original string held by the client in order to construct the next domain name to lookup.  See the DDDS Algorithm specification for the syntax of this field
+        replacement: A <domain-name> which is the next domain-name to query for depending on the potential values found in the flags field.  This field is used when the regular expression is a simple replacement operation.  Any value in this field MUST be a fully qualified domain-name
+        rr: 
+        services: A <character-string> that specifies the Service Parameters applicable to this this delegation path.  It is up to the Application Specification to specify the values found in this field.
+        ttl: Record TTL
     """
     resource = 'RRNAPTR/'
     id_field = 'id'
@@ -2046,6 +2715,11 @@ class BaseRRNAPTR(n.Netdot):
 class BaseRRNS(n.Netdot):
     """
     DNS NS Record
+
+    Attributes:
+        nsdname: A domain-name which specifies a host which should be authoritative for the specified class and domain.
+        rr: 
+        ttl: Record TTL
     """
     resource = 'RRNS/'
     id_field = 'id'
@@ -2066,6 +2740,12 @@ class BaseRRPTR(n.Netdot):
     """
     A PTR record is the reverse of an A record. That is, it maps an IP address
     to a hostname, rather than vice versa.
+
+    Attributes:
+        ipblock: 
+        ptrdname: A domain-name which points to some location in the domain name space.
+        rr: 
+        ttl: Record TTL
     """
     resource = 'RRPTR/'
     id_field = 'id'
@@ -2086,6 +2766,14 @@ class BaseRRPTR(n.Netdot):
 class BaseRRSRV(n.Netdot):
     """
     DNS SRV Record (RFC 2782)
+
+    Attributes:
+        port: The port on this target host of this service.  The range is 0-65535
+        priority: The priority of this target host.  A client MUST attempt to contact the target host with the lowest-numbered priority it can reach; target hosts with the same priority SHOULD be tried in an order defined by the weight field.  The range is 0-65535
+        rr: The domain this SRV record refers to.
+        target: The domain name of the target host.  There MUST be one or more address records for this name, the name MUST NOT be an alias (in the sense of RFC 1034 or RFC 2181)
+        ttl: Record TTL
+        weight: A server selection mechanism.  The weight field specifies a relative weight for entries with the same priority. Larger weights SHOULD be given a proportionately higher probability of being selected. The range of this number is 0-65535
     """
     resource = 'RRSRV/'
     id_field = 'id'
@@ -2109,6 +2797,11 @@ class BaseRRTXT(n.Netdot):
     """
     DNS TXT records are used to hold descriptive text.  The semantics of the
     text depends on the domain where it is found.
+
+    Attributes:
+        rr: 
+        ttl: Record TTL
+        txtdata: One or more character-strings
     """
     resource = 'RRTXT/'
     id_field = 'id'
@@ -2128,6 +2821,11 @@ class BaseRRTXT(n.Netdot):
 class BaseService(n.Netdot):
     """
     An Internet service
+
+    Attributes:
+        info: 
+        name: 
+        Ips: List of IpService objects
     """
     resource = 'Service/'
     id_field = 'id'
@@ -2151,6 +2849,29 @@ class BaseService(n.Netdot):
 class BaseSite(n.Netdot):
     """
     A physical location such as a building or data center.
+
+    Attributes:
+        aliases: Alternative names for this site
+        availability: Time Period during which people at this Site will be available
+        city: City where this Site is located
+        contactlist: List of contacts for this Site
+        country: Country where this Site is located
+        gsf: Gross Square Footage of this site
+        info: User Comments
+        name: Name given to this site
+        number: A unique identifier for this Site within the organization
+        pobox: Post Office Box
+        state: State where this Site is located
+        street1: Street 1st line
+        street2: Street 2nd line
+        zip: ZIP/Postal Code
+        farlinks: List of SiteLink objects
+        nearlinks: List of SiteLink objects
+        devices: List of Device objects
+        entities: List of EntitySite objects
+        floors: List of Floor objects
+        people: List of Person objects
+        subnets: List of SiteSubnet objects
     """
     resource = 'Site/'
     id_field = 'id'
@@ -2216,6 +2937,14 @@ class BaseSite(n.Netdot):
 class BaseSiteLink(n.Netdot):
     """
     A Link between two Sites.  A Site Link can consist of one or more circuits
+
+    Attributes:
+        entity: External Entity which we connect to
+        farend: The remote Site for this Link
+        info: Comments
+        name: A name for this Link
+        nearend: The local Site for this Link
+        circuits: List of Circuit objects
     """
     resource = 'SiteLink/'
     id_field = 'id'
@@ -2242,6 +2971,10 @@ class BaseSiteLink(n.Netdot):
 class BaseSiteSubnet(n.Netdot):
     """
     Site to Subnet join table
+
+    Attributes:
+        site: 
+        subnet: 
     """
     resource = 'SiteSubnet/'
     id_field = 'id'
@@ -2260,6 +2993,11 @@ class BaseSiteSubnet(n.Netdot):
 class BaseSplice(n.Netdot):
     """
     Cable Splices
+
+    Attributes:
+        info: 
+        strand1: 
+        strand2: 
     """
     resource = 'Splice/'
     id_field = 'id'
@@ -2279,6 +3017,14 @@ class BaseSplice(n.Netdot):
 class BaseSTPInstance(n.Netdot):
     """
     Spanning Tree Protocol Instance
+
+    Attributes:
+        bridge_priority: Bridge priority
+        device: Device where this STP instance exists
+        number: STP Instance number
+        root_bridge: Root bridge MAC Address
+        root_port: Root port (ifIndex) for this STP instance
+        stp_ports: List of InterfaceVlan objects
     """
     resource = 'STPInstance/'
     id_field = 'id'
@@ -2305,6 +3051,11 @@ class BaseSTPInstance(n.Netdot):
 class BaseStrandStatus(n.Netdot):
     """
     Cable strand/pair status
+
+    Attributes:
+        info: 
+        name: 
+        strands: List of CableStrand objects
     """
     resource = 'StrandStatus/'
     id_field = 'id'
@@ -2328,6 +3079,10 @@ class BaseStrandStatus(n.Netdot):
 class BaseSubnetZone(n.Netdot):
     """
     IP Subnet to DNS Zone join table
+
+    Attributes:
+        subnet: 
+        zone: 
     """
     resource = 'SubnetZone/'
     id_field = 'id'
@@ -2346,6 +3101,11 @@ class BaseSubnetZone(n.Netdot):
 class BaseUserType(n.Netdot):
     """
     Types of Netdot users
+
+    Attributes:
+        info: 
+        name: 
+        people: List of Person objects
     """
     resource = 'UserType/'
     id_field = 'id'
@@ -2369,6 +3129,15 @@ class BaseUserType(n.Netdot):
 class BaseVlan(n.Netdot):
     """
     A Virtual LAN
+
+    Attributes:
+        description: 
+        info: 
+        name: Human-defined Name for this VLAN
+        vid: 
+        vlangroup: VLAN group to which this VLAN belongs
+        interfaces: List of InterfaceVlan objects
+        subnets: List of Ipblock objects
     """
     resource = 'Vlan/'
     id_field = 'id'
@@ -2400,6 +3169,14 @@ class BaseVlan(n.Netdot):
 class BaseVlanGroup(n.Netdot):
     """
     A Virtual LAN Group
+
+    Attributes:
+        description: A short description for this VlanGroup
+        end_vid: Last VLAN number
+        info: 
+        name: A name identifying this VLAN group
+        start_vid: First VLAN number
+        vlans: List of Vlan objects
     """
     resource = 'VlanGroup/'
     id_field = 'id'
@@ -2426,6 +3203,25 @@ class BaseVlanGroup(n.Netdot):
 class BaseZone(n.Netdot):
     """
     A DNS Zone
+
+    Attributes:
+        active: Whether a DNS zone file should be generated for this Zone
+        contactlist: 
+        default_ttl: Default TTL to apply to records when exporting the zone file
+        expire: A 32 bit time value that specifies the upper limit on the time interval that can elapse before the zone is no longer authoritative.
+        export_file: Path and file name to export records to.
+        include: Text to include when exporting zone
+        info: 
+        minimum: The unsigned 32 bit specifying the time to live for negative responses
+        mname: The domain-name of the name server that was the original or primary source of data for this zone
+        name: The zone or domain name
+        refresh: A 32 bit time interval before the zone should be refreshed.
+        retry: A 32 bit time interval that should elapse before a failed refresh should be retried.
+        rname: A <domain-name> which specifies the mailbox of the person responsible for this zone.
+        serial: The unsigned 32 bit version number of the original copy of the zone.  Zone transfers preserve this value.  This value wraps and should be compared using sequence space arithmetic.
+        records: List of RR objects
+        subnets: List of SubnetZone objects
+        aliases: List of ZoneAlias objects
     """
     resource = 'Zone/'
     id_field = 'id'
@@ -2471,6 +3267,11 @@ class BaseZone(n.Netdot):
 class BaseZoneAlias(n.Netdot):
     """
     An alias of an existing zone
+
+    Attributes:
+        info: 
+        name: The zone or domain name
+        zone: Zone
     """
     resource = 'ZoneAlias/'
     id_field = 'id'

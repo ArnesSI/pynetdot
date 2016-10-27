@@ -22,6 +22,9 @@ def load_settings():
         import yaml
         with open(settings_path) as fh:
             settings_load = yaml.safe_load(fh)
+    except IOError as e:
+        # config file does not exist, use defaults
+        settings = defaults
     except Exception as e:
         logger.error('Error loading config file. Using defaults. [%s]' % e)
         settings = defaults

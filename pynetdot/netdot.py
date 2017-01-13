@@ -173,6 +173,14 @@ class Netdot(object):
         """Returns a string displaying all attribures of the object."""
         return self.display('all')
 
+    def pre_save_params_clean(self, params):
+        """
+        Some models might need special params cleanup boefore posting to server.
+        params: dict with serialized fields. It needs to boe modified in-place.
+        The return value of this method is ignored.
+        """
+        pass
+
     def save(self):
         """
         Save changes to this object back to netdot. Or create a new object if
@@ -197,6 +205,7 @@ class Netdot(object):
         for f in fields:
             value_serialized = f.serialize(self)
             params[f.name] = value_serialized
+        self.pre_save_params_clean(params)
         response = api.post(resource, params)
         if response.status_code == 404:
             return False

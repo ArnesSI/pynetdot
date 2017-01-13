@@ -17,6 +17,12 @@ class Ipblock(base.BaseIpblock):
     def label(self):
         return '%s/%s' % (self.address, self.prefix)
 
+class Device(base.BaseDevice):
+    def pre_save_params_clean(self, params):
+        # netdot server api expects hostnames in string form, not as an id of a RR object
+        if 'name' in params and not self.id:
+            params['name'] = str(self.name)
+
 # Generate classes for each class in base module. But skip those already
 # defined in this module.
 my_classes = inspect.getmembers(sys.modules[__name__], inspect.isclass)

@@ -2,10 +2,6 @@ from setuptools import setup
 from codecs import open
 from os import path
 
-import sys
-sys.path.insert(0, './pynetdot')
-from pynetdot import VERSION
-
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
@@ -18,7 +14,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='pynetdot',
-    version = VERSION,
+    version = '1.3.3',
 
     description='Python client for netdot REST API',
     long_description=long_description,
@@ -27,10 +23,9 @@ setup(
     author_email='matej.vadnjal@arnes.si',
     license='LGPLv3',
 
-    packages=['pynetdot',
-              'pynetdot/models'],
+    packages=['pynetdot', 'pynetdot/models'],
 
-    install_requires=['python-dateutil',
-                      'requests'],
+    install_requires=['python-dateutil', 'requests'],
+    requires=['dateutil', 'requests'],
 
 )

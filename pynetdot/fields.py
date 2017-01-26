@@ -58,7 +58,7 @@ class BoolField(BaseField):
 
 class DateField(BaseField):
     def _clean(self, v):
-        if not v or v == '':
+        if not v or v == '' or v == '0000-00-00':
             return None
         date = datetime_parser.parse(v)
         return date.date()

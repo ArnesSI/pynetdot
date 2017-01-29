@@ -37,8 +37,6 @@ environment variable. If this variable is not set, pynetdot will try to load
 
 This file will be read when you import pynetdot module.
 
-You'll need the PyYAML module installed.
-
 If you are using Kerberos Single Sign-On authentication for your netdot
 page, you may set your credentials like this:
 

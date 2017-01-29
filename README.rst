@@ -12,6 +12,22 @@ This client can query, edit, delete and create objects in a netdot installation
 via it's generic REST API [https://myserver.mydomain.com/netdot/rest/]. It
 exposes an interface similar to that of Django's models.
 
+************
+Installation
+************
+
+pynetdot can be installed as any other python module.
+
+Via pip::
+
+ pip install pynetdot
+
+Install manually::
+
+ python setup.py install
+
+Pip is preferred.
+
 *************
 Configuration
 *************
@@ -37,6 +53,9 @@ environment variable. If this variable is not set, pynetdot will try to load
 
 This file will be read when you import pynetdot module.
 
+Kerberos Single Sign-On authentication
+======================================
+
 If you are using Kerberos Single Sign-On authentication for your netdot
 page, you may set your credentials like this:
 
@@ -48,25 +67,9 @@ page, you may set your credentials like this:
 You will need to install requests_kerberos module first, and don't forget to
 perform kinit if you are running your script on a non-Windows machine.
 
-You can enable Kerberos SSO in a YAML configuration file as well:
+You can enable Kerberos SSO in a YAML configuration file as well::
 
  kerberos: True
-
-************
-Installation
-************
-
-pynetdot can be installed as any other python module.
-
-Via pip::
-
- pip install pynetdot
-
-Install manually::
-
- python setup.py install
-
-Pip is preferred.
 
 *****
 Usage

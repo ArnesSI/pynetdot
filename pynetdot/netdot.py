@@ -6,15 +6,16 @@ from .api import NetdotAPI
 logger = logging.getLogger(__name__)
 api = None
 
-def setup(url='http://localhost/netdot/', username='admin', password='password', verify=True):
+def setup(url='http://localhost/netdot/', username='admin', password='password', verify=True, kerberos=False):
     global api
-    api = NetdotAPI(url=url, username=username, password=password, verify=verify)
+    api = NetdotAPI(url=url, username=username, password=password, verify=verify, kerberos=kerberos)
 
 def load_settings():
     defaults = {
         'username': 'user',
         'password': 'password',
         'url': 'http://localhost/netdot',
+        'kerberos': False,
     }
     default_path = os.path.join(os.path.expanduser('~'), '.pynetdot.yaml')
     settings_path = os.environ.get('PYNETDOT_SETTINGS', default_path)

@@ -39,6 +39,21 @@ This file will be read when you import pynetdot module.
 
 You'll need the PyYAML module installed.
 
+If you are using Kerberos Single Sign-On authentication for your netdot
+page, you may set your credentials like this:
+
+>>> import pynetdot
+>>> pynetdot.setup(
+....    url='http://server.fqdn/netdot',
+....    kerberos=True)
+
+You will need to install requests_kerberos module first, and don't forget to
+perform kinit if you are running your script on a non-Windows machine.
+
+You can enable Kerberos SSO in a YAML configuration file as well:
+
+ kerberos: True
+
 ************
 Installation
 ************

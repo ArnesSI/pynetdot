@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from .netdot import setup, load_settings
 from .models import *
 

@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 import sys
 import inspect
-import base
+from . import base
 
 # Add custom behaviour to some class:
 #class Device(base.BaseDevice):

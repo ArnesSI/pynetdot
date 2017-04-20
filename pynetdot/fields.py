@@ -122,7 +122,7 @@ class LinkField(BaseField):
         else:
             try:
                 int(value)
-            except TypeError, ValueError:
+            except (TypeError, ValueError):
                 return ''
             else:
                 return str(value)

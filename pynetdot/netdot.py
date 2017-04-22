@@ -258,4 +258,8 @@ class Netdot(object):
         if not self.id:
             return '%s.%s()' % (self.__class__.__module__, self.__class__.__name__)
         else:
-            return '%s.%s("%s")' % (self.__class__.__module__, self.__class__.__name__, self.label.encode('utf-8', 'replace'))
+            r = '%s.%s("%s")' % (self.__class__.__module__, self.__class__.__name__, str(self))
+            if type(r) is not str:
+                return r.encode('utf-8')
+            else:
+                return r

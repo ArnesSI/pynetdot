@@ -14,7 +14,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='pynetdot',
-    version = '1.4.1',
+    version='1.5.0',
 
     description='Python client for netdot REST API',
     long_description=long_description,

@@ -24,7 +24,7 @@ class Base{{ model.class_name }}(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in {{ model.label }}])
+        l = ' '.join([str(getattr(self, l)) for l in {{ model.label }}])
         return l.strip()
 
 {% for link in reverse_links.get(model_name, []) %}

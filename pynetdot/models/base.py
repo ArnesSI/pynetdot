@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+from builtins import str
 import pynetdot.netdot as n
 import pynetdot.fields as f
 import pynetdot.models
@@ -21,7 +23,7 @@ class BaseArpCache(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['tstamp', 'device']])
+        l = ' '.join([str(getattr(self, l)) for l in ['tstamp', 'device']])
         return l.strip()
 
     @property
@@ -52,7 +54,7 @@ class BaseArpCacheEntry(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['ipaddr', 'physaddr', 'interface']])
+        l = ' '.join([str(getattr(self, l)) for l in ['ipaddr', 'physaddr', 'interface']])
         return l.strip()
 
 
@@ -80,7 +82,7 @@ class BaseASN(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['number']])
+        l = ' '.join([str(getattr(self, l)) for l in ['number']])
         return l.strip()
 
     @property
@@ -137,7 +139,7 @@ class BaseAsset(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['product_id', 'serial_number', 'physaddr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['product_id', 'serial_number', 'physaddr']])
         return l.strip()
 
     @property
@@ -181,7 +183,7 @@ class BaseAudit(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['tstamp', 'username', 'label']])
+        l = ' '.join([str(getattr(self, l)) for l in ['tstamp', 'username', 'label']])
         return l.strip()
 
 
@@ -208,7 +210,7 @@ class BaseAvailability(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -269,7 +271,7 @@ class BaseBackboneCable(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -318,7 +320,7 @@ class BaseBGPPeering(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['device', 'entity']])
+        l = ' '.join([str(getattr(self, l)) for l in ['device', 'entity']])
         return l.strip()
 
 
@@ -354,7 +356,7 @@ class BaseCableStrand(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -388,7 +390,7 @@ class BaseCableType(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -440,7 +442,7 @@ class BaseCircuit(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['cid']])
+        l = ' '.join([str(getattr(self, l)) for l in ['cid']])
         return l.strip()
 
     @property
@@ -473,7 +475,7 @@ class BaseCircuitStatus(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -501,7 +503,7 @@ class BaseCircuitType(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -569,7 +571,7 @@ class BaseCloset(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'room']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'room']])
         return l.strip()
 
     @property
@@ -621,7 +623,7 @@ class BaseContact(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['person', 'contacttype']])
+        l = ' '.join([str(getattr(self, l)) for l in ['person', 'contacttype']])
         return l.strip()
 
 
@@ -653,7 +655,7 @@ class BaseContactList(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -726,7 +728,7 @@ class BaseContactType(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -885,7 +887,7 @@ class BaseDevice(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -954,7 +956,7 @@ class BaseDeviceAttr(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'value', 'device']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'value', 'device']])
         return l.strip()
 
 
@@ -977,7 +979,7 @@ class BaseDeviceAttrName(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -1004,7 +1006,7 @@ class BaseDeviceContacts(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['contactlist']])
+        l = ' '.join([str(getattr(self, l)) for l in ['contactlist']])
         return l.strip()
 
 
@@ -1054,7 +1056,7 @@ class BaseDeviceModule(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'model', 'device']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'model', 'device']])
         return l.strip()
 
 
@@ -1078,7 +1080,7 @@ class BaseDhcpAttr(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'value']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'value']])
         return l.strip()
 
 
@@ -1105,7 +1107,7 @@ class BaseDhcpAttrName(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -1152,11 +1154,11 @@ class BaseDhcpScope(n.Netdot):
         f.LinkField('type', display_name='Type', link_to='DhcpScopeType'),
         f.IntegerField('version', display_name='Version (4|6)'),
     ]
-    _views = {'subnet': ['name', 'type', 'active', 'container', 'ipblock', 'enable_failover', 'failover_peer', 'text'], 'all': ['name', 'type', 'version', 'container', 'active', 'ipblock', 'physaddr', 'duid', 'text', 'enable_failover', 'failover_peer', 'export_file'], 'group': ['name', 'type', 'active', 'container', 'text'], 'global': ['name', 'type', 'version', 'active', 'enable_failover', 'failover_peer', 'export_file', 'text'], 'brief': ['name', 'type'], 'subclass': ['name', 'type', 'active', 'container', 'text'], 'host': ['name', 'type', 'active', 'container', 'ipblock', 'duid', 'physaddr', 'text'], 'shared-network': ['name', 'type', 'active', 'container', 'text'], 'class': ['name', 'type', 'active', 'container', 'text'], 'pool': ['name', 'type', 'active', 'container', 'text']}
+    _views = {'subnet': ['name', 'type', 'active', 'container', 'ipblock', 'enable_failover', 'failover_peer', 'text'], 'pool': ['name', 'type', 'active', 'container', 'text'], 'subclass': ['name', 'type', 'active', 'container', 'text'], 'brief': ['name', 'type'], 'host': ['name', 'type', 'active', 'container', 'ipblock', 'duid', 'physaddr', 'text'], 'shared-network': ['name', 'type', 'active', 'container', 'text'], 'global': ['name', 'type', 'version', 'active', 'enable_failover', 'failover_peer', 'export_file', 'text'], 'all': ['name', 'type', 'version', 'container', 'active', 'ipblock', 'physaddr', 'duid', 'text', 'enable_failover', 'failover_peer', 'export_file'], 'class': ['name', 'type', 'active', 'container', 'text'], 'group': ['name', 'type', 'active', 'container', 'text']}
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['type', 'name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['type', 'name']])
         return l.strip()
 
     @property
@@ -1199,7 +1201,7 @@ class BaseDhcpScopeType(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -1226,7 +1228,7 @@ class BaseDhcpScopeUse(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['scope', 'template']])
+        l = ' '.join([str(getattr(self, l)) for l in ['scope', 'template']])
         return l.strip()
 
 
@@ -1277,11 +1279,11 @@ class BaseEntity(n.Netdot):
         f.StringField('oid', display_name='Enterprise OID'),
         f.StringField('short_name', display_name='Short Name'),
     ]
-    _views = {'peer': ['name', 'aliases', 'short_name', 'type', 'availability', 'contactlist', 'asname', 'asnumber', 'info'], 'all': ['name', 'aliases', 'short_name', 'availability', 'contactlist', 'acctnumber', 'maint_contract', 'asname', 'asnumber', 'oid', 'config_type', 'info'], 'provider': ['name', 'aliases', 'short_name', 'type', 'availability', 'contactlist', 'asname', 'asnumber', 'info'], 'brief': ['name', 'short_name'], 'manufacturer': ['name', 'aliases', 'short_name', 'type', 'contactlist', 'oid', 'config_type', 'info']}
+    _views = {'manufacturer': ['name', 'aliases', 'short_name', 'type', 'contactlist', 'oid', 'config_type', 'info'], 'provider': ['name', 'aliases', 'short_name', 'type', 'availability', 'contactlist', 'asname', 'asnumber', 'info'], 'all': ['name', 'aliases', 'short_name', 'availability', 'contactlist', 'acctnumber', 'maint_contract', 'asname', 'asnumber', 'oid', 'config_type', 'info'], 'brief': ['name', 'short_name'], 'peer': ['name', 'aliases', 'short_name', 'type', 'availability', 'contactlist', 'asname', 'asnumber', 'info']}
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -1369,7 +1371,7 @@ class BaseEntityRole(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['entity', 'type']])
+        l = ' '.join([str(getattr(self, l)) for l in ['entity', 'type']])
         return l.strip()
 
 
@@ -1391,7 +1393,7 @@ class BaseEntitySite(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['entity', 'site']])
+        l = ' '.join([str(getattr(self, l)) for l in ['entity', 'site']])
         return l.strip()
 
 
@@ -1414,7 +1416,7 @@ class BaseEntityType(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -1442,7 +1444,7 @@ class BaseFiberType(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -1472,7 +1474,7 @@ class BaseFloor(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['level', 'site']])
+        l = ' '.join([str(getattr(self, l)) for l in ['level', 'site']])
         return l.strip()
 
     @property
@@ -1502,7 +1504,7 @@ class BaseFWTable(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['tstamp', 'device']])
+        l = ' '.join([str(getattr(self, l)) for l in ['tstamp', 'device']])
         return l.strip()
 
     @property
@@ -1531,7 +1533,7 @@ class BaseFWTableEntry(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['interface', 'physaddr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['interface', 'physaddr']])
         return l.strip()
 
 
@@ -1553,7 +1555,7 @@ class BaseGroupRight(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['contactlist', 'accessright']])
+        l = ' '.join([str(getattr(self, l)) for l in ['contactlist', 'accessright']])
         return l.strip()
 
 
@@ -1596,7 +1598,7 @@ class BaseHorizontalCable(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['jackid']])
+        l = ' '.join([str(getattr(self, l)) for l in ['jackid']])
         return l.strip()
 
     @property
@@ -1627,7 +1629,7 @@ class BaseHostAudit(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['zone']])
+        l = ' '.join([str(getattr(self, l)) for l in ['zone']])
         return l.strip()
 
 
@@ -1728,7 +1730,7 @@ class BaseInterface(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'device']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'device']])
         return l.strip()
 
     @property
@@ -1783,7 +1785,7 @@ class BaseInterfaceVlan(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['interface', 'vlan']])
+        l = ' '.join([str(getattr(self, l)) for l in ['interface', 'vlan']])
         return l.strip()
 
 
@@ -1842,11 +1844,11 @@ class BaseIpblock(n.Netdot):
         f.IntegerField('version', display_name='Version(4/6)'),
         f.LinkField('vlan', display_name='Vlan', link_to='Vlan'),
     ]
-    _views = {'address_brief': ['address', 'status', 'used_by', 'description', 'last_seen'], 'all': ['address', 'prefix', 'version', 'parent', 'interface', 'vlan', 'status', 'monitored', 'owner', 'used_by', 'rir', 'asn', 'description', 'first_seen', 'last_seen', 'use_network_broadcast', 'info'], 'brief': ['address', 'prefix', 'status', 'used_by', 'description', 'last_seen'], 'subnet_brief': ['address', 'prefix', 'status', 'vlan', 'used_by', 'description'], 'container_brief': ['address', 'prefix', 'status', 'owner', 'used_by', 'rir', 'asn', 'description']}
+    _views = {'container_brief': ['address', 'prefix', 'status', 'owner', 'used_by', 'rir', 'asn', 'description'], 'all': ['address', 'prefix', 'version', 'parent', 'interface', 'vlan', 'status', 'monitored', 'owner', 'used_by', 'rir', 'asn', 'description', 'first_seen', 'last_seen', 'use_network_broadcast', 'info'], 'brief': ['address', 'prefix', 'status', 'used_by', 'description', 'last_seen'], 'address_brief': ['address', 'status', 'used_by', 'description', 'last_seen'], 'subnet_brief': ['address', 'prefix', 'status', 'vlan', 'used_by', 'description']}
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['address', 'prefix']])
+        l = ' '.join([str(getattr(self, l)) for l in ['address', 'prefix']])
         return l.strip()
 
     @property
@@ -1920,7 +1922,7 @@ class BaseIpblockAttr(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'value', 'ipblock']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'value', 'ipblock']])
         return l.strip()
 
 
@@ -1943,7 +1945,7 @@ class BaseIpblockAttrName(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -1969,7 +1971,7 @@ class BaseIpblockStatus(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -2002,7 +2004,7 @@ class BaseIpService(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['ip', 'service']])
+        l = ' '.join([str(getattr(self, l)) for l in ['ip', 'service']])
         return l.strip()
 
 
@@ -2027,7 +2029,7 @@ class BaseMaintContract(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['provider', 'number']])
+        l = ' '.join([str(getattr(self, l)) for l in ['provider', 'number']])
         return l.strip()
 
     @property
@@ -2057,7 +2059,7 @@ class BaseMonitorStatus(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -2094,7 +2096,7 @@ class BaseOUI(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['oui', 'vendor']])
+        l = ' '.join([str(getattr(self, l)) for l in ['oui', 'vendor']])
         return l.strip()
 
 
@@ -2151,7 +2153,7 @@ class BasePerson(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['lastname', 'firstname']])
+        l = ' '.join([str(getattr(self, l)) for l in ['lastname', 'firstname']])
         return l.strip()
 
     @property
@@ -2188,7 +2190,7 @@ class BasePhysAddr(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['address']])
+        l = ' '.join([str(getattr(self, l)) for l in ['address']])
         return l.strip()
 
     @property
@@ -2242,7 +2244,7 @@ class BasePhysAddrAttr(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'value', 'physaddr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'value', 'physaddr']])
         return l.strip()
 
 
@@ -2265,7 +2267,7 @@ class BasePhysAddrAttrName(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -2307,7 +2309,7 @@ class BaseProduct(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['manufacturer', 'name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['manufacturer', 'name']])
         return l.strip()
 
     @property
@@ -2335,7 +2337,7 @@ class BaseProductType(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -2366,7 +2368,7 @@ class BaseRoom(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['floor', 'name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['floor', 'name']])
         return l.strip()
 
     @property
@@ -2433,7 +2435,7 @@ class BaseRR(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'zone']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'zone']])
         return l.strip()
 
     @property
@@ -2520,7 +2522,7 @@ class BaseRRADDR(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['ipblock', 'rr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['ipblock', 'rr']])
         return l.strip()
 
 
@@ -2546,7 +2548,7 @@ class BaseRRCNAME(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['rr', 'cname']])
+        l = ' '.join([str(getattr(self, l)) for l in ['rr', 'cname']])
         return l.strip()
 
 
@@ -2578,7 +2580,7 @@ class BaseRRDS(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['rr', 'key_tag']])
+        l = ' '.join([str(getattr(self, l)) for l in ['rr', 'key_tag']])
         return l.strip()
 
 
@@ -2609,7 +2611,7 @@ class BaseRRHINFO(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['cpu', 'os', 'rr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['cpu', 'os', 'rr']])
         return l.strip()
 
 
@@ -2643,7 +2645,7 @@ class BaseRRLOC(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['rr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['rr']])
         return l.strip()
 
 
@@ -2674,7 +2676,7 @@ class BaseRRMX(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['preference', 'exchange', 'rr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['preference', 'exchange', 'rr']])
         return l.strip()
 
 
@@ -2708,7 +2710,7 @@ class BaseRRNAPTR(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['rr', 'services', 'regexpr', 'replacement']])
+        l = ' '.join([str(getattr(self, l)) for l in ['rr', 'services', 'regexpr', 'replacement']])
         return l.strip()
 
 
@@ -2732,7 +2734,7 @@ class BaseRRNS(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['nsdname', 'rr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['nsdname', 'rr']])
         return l.strip()
 
 
@@ -2759,7 +2761,7 @@ class BaseRRPTR(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['rr', 'ipblock', 'ptrdname']])
+        l = ' '.join([str(getattr(self, l)) for l in ['rr', 'ipblock', 'ptrdname']])
         return l.strip()
 
 
@@ -2789,7 +2791,7 @@ class BaseRRSRV(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['rr', 'target']])
+        l = ' '.join([str(getattr(self, l)) for l in ['rr', 'target']])
         return l.strip()
 
 
@@ -2814,7 +2816,7 @@ class BaseRRTXT(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['txtdata', 'rr']])
+        l = ' '.join([str(getattr(self, l)) for l in ['txtdata', 'rr']])
         return l.strip()
 
 
@@ -2837,7 +2839,7 @@ class BaseService(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -2895,7 +2897,7 @@ class BaseSite(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name', 'aliases']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name', 'aliases']])
         return l.strip()
 
     @property
@@ -2959,7 +2961,7 @@ class BaseSiteLink(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -2986,7 +2988,7 @@ class BaseSiteSubnet(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['subnet', 'site']])
+        l = ' '.join([str(getattr(self, l)) for l in ['subnet', 'site']])
         return l.strip()
 
 
@@ -3010,7 +3012,7 @@ class BaseSplice(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['strand1', 'strand2']])
+        l = ' '.join([str(getattr(self, l)) for l in ['strand1', 'strand2']])
         return l.strip()
 
 
@@ -3039,7 +3041,7 @@ class BaseSTPInstance(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['number', 'device']])
+        l = ' '.join([str(getattr(self, l)) for l in ['number', 'device']])
         return l.strip()
 
     @property
@@ -3067,7 +3069,7 @@ class BaseStrandStatus(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -3094,7 +3096,7 @@ class BaseSubnetZone(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['subnet', 'zone']])
+        l = ' '.join([str(getattr(self, l)) for l in ['subnet', 'zone']])
         return l.strip()
 
 
@@ -3117,7 +3119,7 @@ class BaseUserType(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -3152,7 +3154,7 @@ class BaseVlan(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['vid']])
+        l = ' '.join([str(getattr(self, l)) for l in ['vid']])
         return l.strip()
 
     @property
@@ -3191,7 +3193,7 @@ class BaseVlanGroup(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -3245,7 +3247,7 @@ class BaseZone(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
     @property
@@ -3284,7 +3286,7 @@ class BaseZoneAlias(n.Netdot):
 
     @property
     def label(self):
-        l = ' '.join([unicode(getattr(self, l)) for l in ['name']])
+        l = ' '.join([str(getattr(self, l)) for l in ['name']])
         return l.strip()
 
 

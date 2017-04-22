@@ -1,4 +1,6 @@
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
+from future.utils import python_2_unicode_compatible
+from builtins import str
 import os
 import logging
 from .serializer import parse_xml
@@ -37,6 +39,7 @@ def load_settings():
     return settings
 
 
+@python_2_unicode_compatible
 class Netdot(object):
 
     resource = None
@@ -158,15 +161,15 @@ class Netdot(object):
         """
         Returns a string displaying the object attributes for the given view.
         """
-        ds = u'%s:\n' % self.label
+        ds = '%s:\n' % self.label
         if view=='all' and not self._views.get(view):
             for f in self._fields:
                 value = getattr(self, f.name)
-                ds += u'\t%s: %s\n' % (f.name, value)
+                ds += '\t%s: %s\n' % (f.name, value)
         elif self._views.get(view):
             for f_name in self._views.get(view):
                 value = getattr(self, f_name)
-                ds += u'\t%s: %s\n' % (f_name, value)
+                ds += '\t%s: %s\n' % (f_name, value)
         else:
             raise Exception('View %s not defined' % view)
         return ds
@@ -248,12 +251,8 @@ class Netdot(object):
                 return default
             raise AttributeError("%r object has no attribute %r" % (self.__class__, attr))
 
-    def __unicode__(self):
-        return self.label
-
     def __str__(self):
-        u = unicode(self)
-        return u.encode('utf-8', 'replace')
+        return self.label
 
     def __repr__(self):
         if not self.id:

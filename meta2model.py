@@ -187,7 +187,9 @@ for r in resources:
 #sys.exit(1)
 
 # print(results)
-print('''import pynetdot.netdot as n
+print('''from __future__ import absolute_import, division, print_function, unicode_literals
+from builtins import str
+import pynetdot.netdot as n
 import pynetdot.fields as f
 import pynetdot.models
 ''')

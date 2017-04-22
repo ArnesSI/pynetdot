@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
 import sys
 import inspect
 from . import base
@@ -32,4 +32,4 @@ for base_name, cls in inspect.getmembers(base, inspect.isclass):
     name = base_name.replace('Base', '')
     if name in my_names:
         continue
-    globals()[name] = type(name, (cls,), {})
+    globals()[name] = type(str(name), (cls,), {})

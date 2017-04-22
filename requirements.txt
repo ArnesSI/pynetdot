@@ -3,3 +3,4 @@ setuptools==32.3.1
 python_dateutil==2.6.0
 Jinja2==2.9.4
 PyYAML==3.12
+future==0.16.0

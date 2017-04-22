@@ -28,4 +28,14 @@ setup(
     install_requires=['python-dateutil', 'requests', 'PyYAML', 'future'],
     requires=['dateutil', 'requests', 'yaml', 'future'],
 
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Telecommunications Industry',
+        'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
+
+    ]
 )

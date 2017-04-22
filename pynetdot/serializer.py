@@ -7,6 +7,9 @@ INVALID_CHARS = '\x00\x01\x02\x03\x04\x05\x06\x07\x08\x0b\x0c\x0e\x0f\x10\x11\x1
 
 
 def parse_xml(data):
+    if type(data) is not str:
+        # on python3 response will be bytes() and needs to be decoded as utf-8
+        data = data.decode('utf-8')
     data = _xml_pre_clean(data)
     root = ET.fromstring(data)
     return root

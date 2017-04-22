@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 class NetdotAPI(object):
     HEADERS = {
-        'User-Agent':'pynetdot-%s' % pynetdot.__version__,
+        'User-Agent':'pynetdot-{version}',
         'Accept':'text/xml; version=1.0',
     }
 
@@ -25,6 +25,11 @@ class NetdotAPI(object):
             self.auth = None
         self.kerberos = kerberos
         self._cookies = None
+        self._set_headers()
+
+    def _set_headers(self):
+        self._headers = self.HEADERS
+        self._headers['User-Agent'] = self._headers['User-Agent'].format(version=pynetdot.__version__)
 
     def get(self, resource, **kwargs):
         url = self.url + 'rest/' + resource

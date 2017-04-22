@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import sys
 from pprint import pprint
 from warnings import warn
@@ -185,11 +186,13 @@ for r in resources:
 #pprint(models)
 #sys.exit(1)
 
-# print results
-print '''import pynetdot.netdot as n
+# print(results)
+print('''from __future__ import absolute_import, division, print_function, unicode_literals
+from builtins import str
+import pynetdot.netdot as n
 import pynetdot.fields as f
 import pynetdot.models
-'''
+''')
 
 from jinja2 import Environment, FileSystemLoader
 env = Environment(
@@ -198,4 +201,4 @@ env = Environment(
     lstrip_blocks=True
 )
 template = env.get_template('BaseModel.tmpl')
-print template.render(models=models, reverse_links=reverse_links)
+print(template.render(models=models, reverse_links=reverse_links))

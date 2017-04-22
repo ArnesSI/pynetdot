@@ -25,7 +25,7 @@ setup(
 
     packages=['pynetdot', 'pynetdot/models'],
 
-    install_requires=['python-dateutil', 'requests', 'PyYAML'],
-    requires=['dateutil', 'requests', 'yaml'],
+    install_requires=['python-dateutil', 'requests', 'PyYAML', 'future'],
+    requires=['dateutil', 'requests', 'yaml', 'future'],
 
 )

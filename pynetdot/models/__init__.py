@@ -1,6 +1,7 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
 import sys
 import inspect
-import base
+from . import base
 
 # Add custom behaviour to some class:
 #class Device(base.BaseDevice):
@@ -31,4 +32,4 @@ for base_name, cls in inspect.getmembers(base, inspect.isclass):
     name = base_name.replace('Base', '')
     if name in my_names:
         continue
-    globals()[name] = type(name, (cls,), {})
+    globals()[name] = type(str(name), (cls,), {})

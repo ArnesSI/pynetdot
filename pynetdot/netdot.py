@@ -146,7 +146,7 @@ class Netdot(object):
         new_state = self._as_dict()
         changed_fields = dict([
             (key, value)
-            for key, value in self._original_state.iteritems()
+            for key, value in self._original_state.items()
             if value != new_state[key]
         ])
         return changed_fields.keys()

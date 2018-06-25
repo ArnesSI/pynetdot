@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 # string below is:
 # ''.join([chr(i) for i in range(9)+[11,12]+range(14,32)])
 INVALID_CHARS = '\x00\x01\x02\x03\x04\x05\x06\x07\x08\x0b\x0c\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f'
+INVALID_CHARS_DICT = {ord(c): None for c in INVALID_CHARS}
 
 
 def parse_xml(data):
@@ -25,6 +26,6 @@ def _xml_pre_clean(data):
     # also throw a warning at user
     if any(c in data for c in INVALID_CHARS):
         warnings.warn('One or more invalid characters found in XML string received from netdot API. They were removed. Unpredictable side effects possible.')
-        return data.translate(None, INVALID_CHARS)
+        return data.translate(INVALID_CHARS_DICT)
     else:
         return data

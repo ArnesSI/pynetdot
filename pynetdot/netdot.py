@@ -64,23 +64,25 @@ class Netdot(object):
         return kwargs
 
     @classmethod
-    def all(cls):
-        return cls._search()
+    def all(cls, pure_xml=False):
+        return cls._search(pure_xml)
 
     @classmethod
-    def search(cls, **kwargs):
+    def search(cls, pure_xml=False, **kwargs):
         if not kwargs:
             raise Exception('Need to specify search parameters')
-        return cls._search(**kwargs)
+        return cls._search(pure_xml, **kwargs)
 
     @classmethod
-    def _search(cls, **kwargs):
+    def _search(cls, pure_xml=False, **kwargs):
         params = cls._build_search_params(**kwargs)
         response = api.get(cls.resource, params=params)
         if response.status_code == 404:
             return []
         if not response.ok:
             response.raise_for_status()
+        if pure_xml:
+            return response.content
         xml = parse_xml(response.content)
         results = []
         for c in xml:
